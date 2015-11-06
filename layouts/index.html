@@ -1,0 +1,24 @@
+{{ partial "head.html" . }}
+<body class="{{ .Site.Params.themeColor }}">
+
+{{ partial "sidebar.html" . }}
+
+<div class="content container">
+
+    <h2>Posts</h2>
+
+<div class="posts">
+
+  {{ range .Data.Pages }}
+    {{ if eq .Type "post"}}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a> &middot;
+      <span class="list-date">{{ .Date.Format "2006-01-02" }}</span></li>
+    {{ end }}
+  {{ end }}
+  
+</div>
+</div>
+
+</body>
+</html>
+

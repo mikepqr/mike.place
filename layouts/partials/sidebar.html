@@ -1,0 +1,21 @@
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="{{ .Site.BaseURL }}"><h1>{{ .Site.Title }}</h1></a>
+    </div>
+
+    <p>Mike Williams is a research engineer and data scientist in New York
+    City.</p>
+    <ul class="sidebar-nav">
+      {{ range .Site.Menus.main }}
+        <li><a href="{{.URL}}"> {{ .Name }} </a></li>
+      {{end}}
+        <li><a href="mailto:mike@mike.place">mike@mike.place</a></li>
+        <li><a href="https://github.com/williamsmj/">Github</a></li>
+        <li><a href="https://twitter.com/mikepqr">Twitter</a></li>
+        <li><a href="https://scholar.google.com/citations?user=MZ648iUAAAAJ&amp;hl=en">Google Scholar</a></li>
+    </ul>
+
+    <!-- <p>{{ with .Site.Params.copyright }}{{.}}{{ else }}&copy; {{.Now.Format "2006"}}. All rights reserved. {{end}}</p> -->
+  </div>
+</div>

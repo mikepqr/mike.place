@@ -1,0 +1,18 @@
+theme = "hyde"
+baseurl = "http://williamsmj.github.io/"
+title = "mike.place"
+contentdir = "content" 
+layoutdir = "layouts" 
+publishdir = "public" 
+canonifyurls = true 
+languageCode = "en-us" 
+MetaDataFormat = "toml" 
+[indexes] 
+    category = "categories" 
+    tag = "tags" 
+[author] 
+    name = "Mike Williams" 
+[permalinks]
+    post = "/:year/:slug/"
+[params]
+  description = "The website of Mike Williams"
