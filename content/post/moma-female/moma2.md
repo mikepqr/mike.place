@@ -2,7 +2,7 @@
 Description = ""
 date = "2015-11-09T22:57:11-05:00"
 title = "Female artists in the MOMA collection"
-slug = "moma2"
+slug = "moma-female"
 
 +++
 

@@ -3,7 +3,7 @@ Description = ""
 date = "2015-11-05T23:48:04-04:00"
 menu = ""
 title = "Analyzing the MOMA collection with pandas"
-slug = "moma1"
+slug = "moma"
 
 +++
 
@@ -240,12 +240,12 @@ constructor for this object takes:
    start, or `'Q'` for quarter end, or any of the other offset aliases defined
    by pandas.
  
-Months of the year and days of the week are not true intervals of time but
-rather recurring bins of time, so we can't use the `Grouper()` objects for
-those. Rather, we apply inline `lambda` function (e.g. `lambda x: x.month`) to
-the `DateAcquired` field to pick out the month or day of the week from the
-datetime object in that field. We can then `groupby` that. (And do some tedious
-work to fix the axes labels.)
+Months of the year and days of the week are not intervals of time but rather
+recurring bins of time, so we don't use the `Grouper()` objects for those.
+Rather, we use the `.dt` accessor to pull out the datetime object, and then the
+`.month` or `.weekday` to pick out the month or day of the week from
+`DateAcquired` field of the datetime object in that field. We can then
+`groupby` that. (And do some tedious work to fix the axes labels.)
 
 
 ```python
@@ -257,12 +257,12 @@ ylabel = 'Acquisitions'
  .plot(ax=ax[0]))
 
 (moma
- .groupby(moma['DateAcquired'].map(lambda x: x.month))['DateAcquired']
+ .groupby(moma['DateAcquired'].dt.month)['DateAcquired']
  .count()
  .plot(ax=ax[1]))
 
 (moma.
- groupby(moma['DateAcquired'].map(lambda x: x.weekday()))['DateAcquired']
+ groupby(moma['DateAcquired'].dt.weekday)['DateAcquired']
  .count()
  .plot(ax=ax[2]))
 
