@@ -1,5 +1,5 @@
 theme = "hyde"
-baseurl = "http://williamsmj.github.io/"
+baseurl = "http://mike.place/"
 title = "mike.place"
 contentdir = "content" 
 layoutdir = "layouts" 
