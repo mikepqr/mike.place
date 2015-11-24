@@ -9,8 +9,9 @@ title = "Further Reading from Fluent Python"
 
 I'm reading Luciano Ramalho's [*Fluent
 Python*](http://shop.oreilly.com/product/0636920032519.do) right now. It's a
-great book. I'm particularly enjoying the *Further Reading* sections that end
-each chapter. Here are some of my highlights.
+great book. I'm particularly enjoying the Further Reading sections that end
+each chapter. Here are some of my highlights (excluding the PEPs and core
+documentation).
 
 ### Chapter 2: An array of sequences
 
@@ -43,3 +44,19 @@ each chapter. Here are some of my highlights.
 ### Chapter 6: Design patterns with first-class functions
 
  - [Design patterns with dynamics languages](http://norvig.com/design-patterns/) by Peter Norvig
+
+### Chapter 7: Function decorators and closures
+
+ - [Python decorators in 12
+   steps](http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/)
+   by Simeon Franklin (not mentioned in *Fluent Python*, but I'd been meaning
+   to read it for a while, so I'm putting it here)
+ - [The decorator module
+   documentation](http://pythonhosted.org/decorator/documentation.html) by
+   Michele Simionato
+ - [Blog posts on decorators and monkey
+   patching](https://github.com/GrahamDumpleton/wrapt/tree/master/blog) by
+   Graham Dumpleton
+ - [Closures in Python](http://effbot.org/zone/closure.htm) by Fredrik Lundh
+ - [The roots of Lisp](http://www.paulgraham.com/rootsoflisp.html) by Paul
+   Graham
