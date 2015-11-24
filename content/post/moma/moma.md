@@ -144,7 +144,7 @@ ax.set_xlabel('Count')
 ```
 
 
-![png](/post/moma1/output_8_0.png)
+![png](/post/moma/output_8_0.png)
 
 
 We can do the same thing by `Department`.
@@ -161,7 +161,7 @@ ax.set_xlabel('Count')
 ```
 
 
-![png](/post/moma1/output_10_0.png)
+![png](/post/moma/output_10_0.png)
 
 
 For obvious reasons, there are many more prints, photographs and books than any
@@ -192,7 +192,7 @@ ax.set_xlabel('Count')
 ```
 
 
-![png](/post/moma1/output_14_0.png)
+![png](/post/moma/output_14_0.png)
 
 
 Lots of photographers! What if we only look at the Painting & Sculpture
@@ -219,7 +219,7 @@ ax.set_xlabel('Count')
 ```
 
 
-![png](/post/moma1/output_16_0.png)
+![png](/post/moma/output_16_0.png)
 
 
 Lots of men! (I'll revisit that in the next post.)
@@ -280,7 +280,7 @@ for a in ax:
 ```
 
 
-![png](/post/moma1/output_20_0.png)
+![png](/post/moma/output_20_0.png)
 
 
 Lots of acquisitions in 1964, 1968 and 2008. More acquisitions in October than
@@ -347,7 +347,7 @@ ax.set_ylabel('Number of new artists');
 ```
 
 
-![png](/post/moma1/output_24_0.png)
+![png](/post/moma/output_24_0.png)
 
 
 Let's look at trends in the acquisition of the top few artists in the
@@ -384,7 +384,7 @@ with sns.color_palette(palette='husl', n_colors=8):  # more than 6 colors
 ```
 
 
-![png](/post/moma1/output_28_1.png)
+![png](/post/moma/output_28_1.png)
 
 
 This plot is a bit of a mess, since acquisitions by such famous artists are

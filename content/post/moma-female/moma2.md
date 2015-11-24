@@ -139,7 +139,7 @@ ax.set_ylim(0, 100);
 ```
 
 
-![png](/post/moma2/output_8_0.png)
+![png](/post/moma-female/output_8_0.png)
 
 
 Assuming you think it's desirable that the MOMA collection represents female
@@ -166,7 +166,7 @@ ax.set_ylabel('')
 ax.plot(ax.get_xlim(), [50, 50], 'r--');
 ```
 
-![png](/post/moma2/output_10_0.png)
+![png](/post/moma-female/output_10_0.png)
 
 So, at the present rate, half the new artists MOMA acquires will be female by
 the middle of the 22nd century, just after the institution's 200th anniversary
