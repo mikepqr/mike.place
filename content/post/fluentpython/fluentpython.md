@@ -103,6 +103,9 @@ each chapter. Here are some of my highlights.
  - [Iterables vs. iterators vs.
    generators](http://nvie.com/posts/iterators-vs-generators/) (not mentioned
    in *Fluent Python*)
+ - [Generator Tricks for Systems
+   Programmers](http://www.dabeaz.com/generators/) by David Beazley (not
+   mentioned in *Fluent Python*)
 
 ### Chapter 15: Context managers and else blocks
 
