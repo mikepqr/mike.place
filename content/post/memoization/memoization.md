@@ -7,21 +7,23 @@ slug = "memoization"
 
 +++
 
-Memoization is a handy way of caching results of a function call. If a memoized
-function is called with parameters with which it has already been called,
-evaluation is simply a case of looking up the result the last time it was
-computed. It's worth considering in situations where:
+Memoization is a way of caching the results of a function call. If a function
+is memoized, evaluating it is simply a matter of looking up the result you got
+the first time the function was called with those parameters. This is recorded
+in the memoization cache. If the lookup fails, that's because the function has
+never been called with those parameters. Only then do you need to run the
+function itself.
 
- - the network or database or algorithm makes a call expensive
- - the result is deterministic given the input parameters (or you can live with
-   the result being out of date/have some way of determining if it is out of
-   date)
+Memoization only makes sense if the function is deterministic, or you can live
+with the result being out of date. But if the function is expensive,
+memoization can result in a massive speedup. You're trading the computational
+complexity of the function for that of lookup.
 
 This article will:
 
- - show you what memoization is
- - demonstrate three ways of doing it by hand in Python
- - introduce you to the idea of decorators
+ - show you what memoization is,
+ - demonstrate three ways of doing it by hand in Python,
+ - introduce you to the idea of decorators,
  - and show you how to use the Python standard library to circumvent the fiddly
    details of memoization and decoration
 
@@ -59,10 +61,12 @@ results. This is _memoization_.
 
 The punchline of this article is that you can memoize a function in Python 3.2
 or later by importing `functools` and adding the `@functools.lru_cache`
-decorator to the function. But if you want to know a little bit more about how
-memoization works in Python, why doing it by hand involves syntactically ugly
-compromises, and what decorators are, read on through three approaches to
-manual memoization.
+decorator to the function. Feel free to [skip to the final
+section](#punchline), which shows this.
+
+But if you want to know a little bit more about how memoization works in
+Python, why doing it by hand involves syntactically ugly compromises, and what
+decorators are, read on through three approaches to manual memoization.
 
 ## Memoization by hand: misusing a default parameter
 
@@ -160,8 +164,8 @@ method because of object lookup overheads. It stinks.
 ## Memoization by hand: using `global` 
 
 You can avoid the hacky mutation of default parameters, and the Java-like
-over-engineered object, by simply using `global`. `global`s gets a bad rap, but
-if they're [good enough for Peter
+over-engineered object, by simply using `global`. `global` gets a bad rap, but
+if it's [good enough for Peter
 Norvig](http://nbviewer.ipython.org/url/norvig.com/ipython/Probability.ipynb),
 they're good enough for me:
 
@@ -169,7 +173,7 @@ they're good enough for me:
 > less visual clutter than the 32 instances of `self` needed for the class 
 > definition.
 
-Our `Fib` class doesn't quite have 32 instances of class, but you could argue
+Our `Fib` class doesn't quite have 32 instances of `self`, but you could argue
 that the `global` version is more readable:
 
 ```python
@@ -198,18 +202,18 @@ solved for us by the `lru_cache` decorator.
 
 ## An aside: decorators
 
-A decorator is a higher-order function that takes as its argument a function,
-and returns another function. That returned function is usually just the
-original function, augmented with some extra functionality. The extra
-functionality could be a side-effect such a logging. For example, we could
-create a decorator that prints some text each time the function it decorates is
-called:
+A decorator is a higher-order function, i.e. one that takes as its argument a
+function, and returns another function. In the case of a decorator, that
+returned function is usually just the original function augmented with some
+extra functionality. In the simplest case, the extra functionality is a pure
+side-effect such a logging. For example, we could create a decorator that
+prints some text each time the function it decorates is called:
 
 ```python
 def output_decorator(f):
     def f_(f)
-        print('Running f...')
         f()
+        print('Ran f...')
     return f_
 ```
 
@@ -221,7 +225,7 @@ syntactic sugar to make this even easier:
 ```python
 @output_decorator
 def f()
-    # ... define f
+    # ... define f ...
 ```
 
 If that didn't make sense, Simeon Franklin's [Understanding decorators in 12
@@ -230,30 +234,32 @@ steps](http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/)
 is a tutorial that takes you from the fundamentals of first class functions to
 the principles of decoration. It's great!
 
-The simple side-effect of `output_decorator` is not very interesting. But we
-could go beyond pure side-effects and augment the operation of the function
-itself. For example, the decorator could add precisely the kind of cache
-required for memoization, and intercept calls to the decorated function when
-the answer is already in the cache.
+The side-effect of our `output_decorator` is not very interesting. But we could
+go beyond pure side-effects and augment the operation of the function itself.
+For example, the decorator could add precisely the kind of cache required for
+memoization, and intercept calls to the decorated function when the answer is
+already in the cache.
 
 But if you try to write your own decorator for memoization, you quickly get
-into the details of arguments and, and once you've got passed those, you get
-stuck with Python introspection. Put simply, naively decorating a function is a
-good way to break the functionality the interpreter and other code depends on
-to learn about that function. For more details, check out the [documentation of
-the `decorator`
+mired in the details of argument passing and, and once you've figured that out
+you get truly stuck with Python introspection. Put simply, naively decorating a
+function is a good way to break the features the interpreter and other code
+depends on to learn about the function. For more details, check out the
+[documentation of the `decorator`
 module](http://pythonhosted.org/decorator/documentation.html#statement-of-the-problem),
-which talks about these issues, and the `decorator` module itself offers are
-more general solution (as does
-[`wrapt`](https://github.com/GrahamDumpleton/wrapt)).
+The `decorator` and [`wrapt`](https://github.com/GrahamDumpleton/wrapt) modules
+figure these introspection issues out for you if you're happy to use
+non-standard library code.
 
-Luckily for us, for the particular case of memoization, the fiddly decorator
-details have been worked out, and the solution in in the standard library.
+But luckily for us, for the particular case of memoization, the fiddly
+decorator details have been worked out, and the solution in in the standard
+library.
 
+<a name="punchline"></a>
 ## `functools.lru_cache`
 
-If you're running Python 3.2 or newer all you have to do to memoize it is to
-apply the `functools.lru_cache` decorator:
+If you're running Python 3.2 or newer, all you have to do to memoize a function
+is apply the `functools.lru_cache` decorator:
 
 ```python
 import functools

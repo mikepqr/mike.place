@@ -1,3 +1,6 @@
 [submodule "themes/hyde"]
 	path = themes/hyde
 	url = git@github.com:spf13/hyde.git
+[submodule "static/talks/insight"]
+	path = static/talks/insight
+	url = https://github.com/williamsmj/insight
