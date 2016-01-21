@@ -1,7 +1,7 @@
 <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <a href="{{ .Site.BaseURL }}"><h1>{{ .Site.Title }}</h1></a>
+      <h1>{{ .Site.Title }}</a></h1>
     </div>
 
     <p>Mike Williams is a research engineer and data scientist</p>
@@ -9,10 +9,14 @@
       {{ range .Site.Menus.main }}
         <li><a href="{{.URL}}"> {{ .Name }} </a></li>
       {{end}}
-        <li><a href="mailto:mike@mike.place">mike@mike.place</a></li>
-        <li><a href="https://github.com/williamsmj/">Github</a></li>
-        <li><a href="https://twitter.com/mikepqr">Twitter</a></li>
-        <li><a href="https://scholar.google.com/citations?user=MZ648iUAAAAJ&amp;hl=en">Google Scholar</a></li>
+      <li><a href="mailto:mike@mike.place"><i class="fa fa-envelope fa-fw"></i>
+              mike@mike.place</a></li>
+      <li><a href="https://github.com/williamsmj/"><i class="fa fa-github fa-fw"></i>
+              Github</a></li>
+      <li><a href="https://twitter.com/mikepqr"><i class="fa fa-twitter fa-fw"></i>
+              Twitter</a></li>
+      <li><a href="https://scholar.google.com/citations?user=MZ648iUAAAAJ&amp;hl=en"><i class="fa fa-graduation-cap fa-fw"></i>
+              Google Scholar</a></li>
     </ul>
 
     <!-- <p>{{ with .Site.Params.copyright }}{{.}}{{ else }}&copy; {{.Now.Format "2006"}}. All rights reserved. {{end}}</p> -->
