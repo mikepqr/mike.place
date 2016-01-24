@@ -1,4 +1,4 @@
-theme = "hyde"
+theme = "mike.place"
 baseurl = "http://mike.place/"
 title = "mike.place"
 contentdir = "content" 
