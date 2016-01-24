@@ -1,48 +1,10 @@
-/*
- *                        ___
- *                       /\_ \
- *  _____     ___     ___\//\ \      __
- * /\ '__`\  / __`\  / __`\\ \ \   /'__`\
- * \ \ \_\ \/\ \_\ \/\ \_\ \\_\ \_/\  __/
- *  \ \ ,__/\ \____/\ \____//\____\ \____\
- *   \ \ \/  \/___/  \/___/ \/____/\/____/
- *    \ \_\
- *     \/_/
- *
- * Designed, built, and released under MIT license by @mdo. Learn more at
- * https://github.com/poole/poole.
- */
-
-
-/*
- * Contents
- *
- * Body resets
- * Custom type
- * Messages
- * Container
- * Masthead
- * Posts and pages
- * Pagination
- * Reverse layout
- * Themes
- */
-
-
-/*
- * Body resets
- *
- * Update the foundational and global aspects of the page.
- */
-
 * {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   font-family: Roboto, sans-serif;
@@ -65,17 +27,14 @@ body {
       -ms-text-size-adjust: 100%;
 }
 
-/* No `:visited` state is required by default (browsers will use `a`) */
 a {
   color: #268bd2;
   text-decoration: none;
 }
-/* `:focus` is linked to `:hover` for basic accessibility */
-a:hover,
-a:focus {
+a:hover, a:focus {
   text-decoration: underline;
 }
-/* Headings */
+
 h1, h2, h3, h4, h5, h6 {
   font-family: Poly, serif;
   margin-bottom: .5rem;
@@ -99,8 +58,6 @@ h4, h5, h6 {
   margin-top: 1rem;
   font-size: 1rem;
 }
-
-/* Body text */
 p {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -109,22 +66,16 @@ p {
 strong {
   color: #303030;
 }
-
-
-/* Lists */
 ul, ol, dl {
   margin-top: 0;
   margin-bottom: 1rem;
 }
-
 dt {
   font-weight: bold;
 }
 dd {
   margin-bottom: .5rem;
 }
-
-/* Misc */
 hr {
   position: relative;
   margin: 1.5rem 0;
@@ -132,21 +83,7 @@ hr {
   border-top: 1px solid #eee;
   border-bottom: 1px solid #fff;
 }
-
-abbr {
-  font-size: 85%;
-  font-weight: bold;
-  color: #555;
-  text-transform: uppercase;
-}
-abbr[title] {
-  cursor: help;
-  border-bottom: 1px dotted #e5e5e5;
-}
-
-/* Code */
-code,
-pre {
+code, pre {
   font-family: "Roboto Mono", Menlo, Monaco, "Courier New", monospace;
 }
 code {
@@ -166,7 +103,6 @@ pre code {
   background-color: transparent;
 }
 
-/* Quotes */
 blockquote {
   padding: .5rem 1rem;
   margin: .8rem 0;
@@ -182,37 +118,12 @@ blockquote p:last-child {
     padding-left: 1.25rem;
   }
 }
-
 img {
   display: block;
   margin: 0 0 1rem;
   border-radius: 5px;
   max-width: 100%;
 }
-
-/* Tables */
-table {
-  margin-bottom: 1rem;
-  width: 100%;
-  border: 1px solid #e5e5e5;
-  border-collapse: collapse;
-}
-td,
-th {
-  padding: .25rem .5rem;
-  border: 1px solid #e5e5e5;
-}
-tbody tr:nth-child(odd) td,
-tbody tr:nth-child(odd) th {
-  background-color: #f9f9f9;
-}
-
-
-/*
- * Container
- *
- * Center the page content.
- */
 
 .container {
   max-width: 42rem;
@@ -222,31 +133,9 @@ tbody tr:nth-child(odd) th {
   margin-right: auto;
 }
 
-
-/*
- * Posts and pages
- *
- * Each post is wrapped in `.post` and is used on default and post layouts. Each
- * page is wrapped in `.page` and is only used on the page layout.
- */
-
-.page,
-.post {
+.page, .post {
   margin-bottom: 4em;
 }
-
-/* Blog post or page title */
-.page-title,
-.post-title,
-.post-title a {
-  color: #303030;
-}
-.page-title,
-.post-title {
-  margin-top: 0;
-}
-
-/* Meta data line below post title */
 .post-date {
   display: block;
   margin-top: -.5rem;
