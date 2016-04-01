@@ -14,5 +14,6 @@ MetaDataFormat = "toml"
     name = "Mike Williams" 
 [permalinks]
     post = "/:year/:slug/"
+    page = "/:slug/"
 [params]
   description = "The website of Mike Williams"
