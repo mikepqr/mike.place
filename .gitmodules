@@ -1,0 +1,3 @@
+[submodule "static/talks/insight_2016"]
+	path = static/talks/insight_2016
+	url = git@github.com:williamsmj/insight.git
