@@ -10,3 +10,6 @@
 [submodule "static/talks/ffl_summarization"]
 	path = static/talks/ffl_summarization
 	url = git@github.com:fastforwardlabs/talk_summarization.git
+[submodule "static/talks/astrohackny"]
+	path = static/talks/astrohackny
+	url = git@github.com:williamsmj/talk-20160517-astrohackny.git

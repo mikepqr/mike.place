@@ -18,7 +18,6 @@ And here are some slides:
    2016](/talks/columbia_2016/columbia_2016.pdf) (PDF)
  - [Strata San Jose, 2016](/talks/strata_sanjose_2016/strata_sanjose_2016.pdf)
    (PDF)
- - [Hammerbacher Lab, 2016](/talks/hammerlab_2016/)
  - [Domino Data Popup, 2016](/talks/popup_2016/popup_2016.pdf) (PDF)
-
+ - [Intro to neural networks at AstroHackNY, 2016](/talks/astrohackny/)
 
