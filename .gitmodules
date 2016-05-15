@@ -2,10 +2,10 @@
 	path = static/talks/insight_2016
 	url = git@github.com:williamsmj/insight.git
 [submodule "static/talks/ffl_research"]
-	path = static/talks/ffl_research
+	path = static/talks/ffl-research
 	url = git@github.com:fastforwardlabs/talk_2016_04_research.git
 [submodule "static/talks/ffl_summarization"]
-	path = static/talks/ffl_summarization
+	path = static/talks/ffl-summarization
 	url = git@github.com:fastforwardlabs/talk_summarization.git
 [submodule "static/talks/astrohackny"]
 	path = static/talks/astrohackny
