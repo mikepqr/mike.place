@@ -7,3 +7,6 @@
 [submodule "static/talks/ffl_research"]
 	path = static/talks/ffl_research
 	url = git@github.com:fastforwardlabs/talk_2016_04_research.git
+[submodule "static/talks/ffl_summarization"]
+	path = static/talks/ffl_summarization
+	url = git@github.com:fastforwardlabs/talk_summarization.git
