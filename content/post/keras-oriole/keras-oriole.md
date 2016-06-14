@@ -7,7 +7,7 @@ slug = "keras-oriole"
 
 +++
 
-Back in April I recorded an [Oriole about
+O'Reilly just published my [Oriole about
 Keras](https://www.oreilly.com/learning/getting-started-with-deep-learning-using-keras-and-python/purchase).
 
 [Keras](http://keras.io/) is a high-level neural network library that, among
