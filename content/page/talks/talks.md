@@ -6,16 +6,13 @@ slug = "talks"
 
 +++
 
-I give talks! Here's some video:
+Here are links to some of the talks I've given. These are are mostly about the
+technical and ethical challenges of machine learning.
 
- - [Privilege and supervised machine learning at Domino Data Popup Austin,
-   2016](https://vimeo.com/163292139)
- - [An interview with me about machine learning and ethics on The Cube, Strata
-   San Jose, 2016](https://www.youtube.com/watch?v=1ui84CSu3S0)
-
-And here are some slides:
-
- - [Strata San Jose, 2016](/talks/strata_sanjose_2016/strata_sanjose_2016.pdf)
-   (PDF)
- - [Domino Data Popup, 2016](/talks/popup_2016/popup_2016.pdf) (PDF)
- - [Intro to neural networks at AstroHackNY, 2016](/talks/astrohackny/)
+ - Summarizing Documents at PyGotham, NYC, 2016 ([slides](/talks/pygotham/#p1))
+ - Intro to neural networks at AstroHackNY, Columbia University, 2016
+   ([slides](/talks/astrohackny/))
+ - Privilege and supervised machine learning at Domino Data Popup Austin, 2016
+   ([video](https://vimeo.com/163292139),
+   [slides](/talks/strata_sanjose_2016/strata_sanjose_2016.pdf),
+   [interview](https://www.youtube.com/watch?v=1ui84CSu3S0))

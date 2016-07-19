@@ -4,3 +4,6 @@
 [submodule "static/talks/insight"]
 	path = static/talks/insight
 	url = https://github.com/williamsmj/talk_20160601_insight
+[submodule "static/talks/pygotham"]
+	path = static/talks/pygotham
+	url = git@github.com:fastforwardlabs/talk_summarization.git
