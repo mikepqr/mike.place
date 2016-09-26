@@ -8,7 +8,7 @@ slug = "talks"
 
 Here are links to decks/video for some of the talks I've given:
 
- - Summarizing Documents at PyGotham, NYC, 2016 ([slides](/talks/pygotham/#p1))
+ - Summarizing Documents at PyGotham, NYC, 2016 ([video](https://youtu.be/y7XoypvQRhY), [slides](/talks/pygotham/#p1))
  - Intro to neural networks at AstroHackNY, Columbia University, 2016
    ([slides](/talks/astrohackny/))
  - Privilege and supervised machine learning at Domino Data Popup Austin, 2016

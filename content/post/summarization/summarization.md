@@ -7,21 +7,19 @@ slug = "summarization"
 
 +++
 
-I recently gave a couple of talks about text summarization
+I gave a talk ([video](https://youtu.be/y7XoypvQRhY),
+[slides](http://mike.place/talks/pygotham/#p1)) about text summarization at
+PyGotham 2016.
  
- - PyGotham, July 2016 ([video](https://youtu.be/y7XoypvQRhY),
-   [slides](http://mike.place/talks/pygotham/#p1))
- - Strata, September 2016 (slides coming soon)
- 
-In the talks, I demonstrate three ways of automatically summarizing text. One
-is an extremely simple algorithm from the 1950s, one uses Latent Dirichlet
-Allocation, and one uses skipthoughts and recurrent neural networks.
+I cover three ways of automatically summarizing text. One is an extremely
+simple algorithm from the 1950s, one uses Latent Dirichlet Allocation, and one
+uses skipthoughts and recurrent neural networks.
 
-Here is a list of resources if you're interested in text summarization and want
-to dive deeper. 
+The talk is conceptual, and avoids code and mathematics. So here is a list of
+resources if you're interested in text summarization and want to dive deeper. 
 
-But I also hope this list useful if you're interested in topic modelling or
-neural networks for other reasons.
+This list useful is hopefully also useful if you're interested in topic
+modelling or neural networks for other reasons.
 
 ## Topic modelling
 
