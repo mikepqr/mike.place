@@ -6,8 +6,7 @@ slug = "talks"
 
 +++
 
-Here are links to some of the talks I've given. These are are mostly about the
-technical and ethical challenges of machine learning.
+Here are links to decks/video for some of the talks I've given:
 
  - Summarizing Documents at PyGotham, NYC, 2016 ([slides](/talks/pygotham/#p1))
  - Intro to neural networks at AstroHackNY, Columbia University, 2016

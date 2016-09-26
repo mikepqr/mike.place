@@ -7,3 +7,6 @@
 [submodule "static/talks/pygotham"]
 	path = static/talks/pygotham
 	url = git@github.com:fastforwardlabs/talk_summarization.git
+[submodule "static/talks/warbyparker"]
+	path = static/talks/warbyparker
+	url = git@github.com:fastforwardlabs/talk_summarization.git
