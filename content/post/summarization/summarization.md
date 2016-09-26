@@ -2,14 +2,15 @@
 Description = ""
 date = "2016-09-25T20:06:59-04:00"
 menu = ""
-title = "Further reading on text summarization, topic models and RNNs"
+title = "Text summarization, topic models and RNNs"
 slug = "summarization"
 
 +++
 
-I gave a talk ([video](https://youtu.be/y7XoypvQRhY),
-[slides](http://mike.place/talks/pygotham/#p1)) about text summarization at
-PyGotham 2016.
+I've recently given a couple of talks ([PyGotham
+video](https://youtu.be/y7XoypvQRhY), [PyGotham
+slides](http://mike.place/talks/pygotham/#p1), [Strata NYC
+slides](http://mike.place/talks/strata_nyc_2016)) about text summarization.
  
 I cover three ways of automatically summarizing text. One is an extremely
 simple algorithm from the 1950s, one uses Latent Dirichlet Allocation, and one

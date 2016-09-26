@@ -10,3 +10,6 @@
 [submodule "static/talks/warbyparker"]
 	path = static/talks/warbyparker
 	url = git@github.com:fastforwardlabs/talk_summarization.git
+[submodule "static/talks/strata_nyc_2016"]
+	path = static/talks/strata_nyc_2016
+	url = git@github.com:fastforwardlabs/talk_summarization.git
