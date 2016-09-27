@@ -49,9 +49,12 @@ those four, you'll be well placed.
    lot of ground.
  - [Chris Olah's articles](http://colah.github.io/) are exceptionally clear
    introductions to some of the trickiest and most important concepts,
-   including recurrent neural networks (which are in the [article on
-   LSTMs](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)). But if
-   you're new to neural networks, start with [the post on
+   including [word
+   embeddings](http://colah.github.io/posts/2014-07-NLP-RNNs-Representations/)
+   and [recurrent neural
+   networks](http://colah.github.io/posts/2015-08-Understanding-LSTMs/). But
+   if you're new to neural networks and interested in the fundamentals, start
+   with [the post on
    backpropagation](http://colah.github.io/posts/2015-08-Backprop/).
  - For an elementary computational introduction to neural networks, I cannot
    recommend [Andrew Ng's Coursera course on machine
@@ -63,7 +66,7 @@ those four, you'll be well placed.
  - [Chapters 1-3 of Michael Nielsen's
    textbook](http://neuralnetworksanddeeplearning.com/), are a comprehensive
    treatment of the basic maths of backpropagation, the algorithm used to train
-   neural networks. I think it's great. But fair warning: Nielsen is a
+   neural networks. I think it's a great book. But fair warning: Nielsen is a
    physicist, and it shows in his notation, which is that identifiably physics
    mixture of pedantic, inconsisent and verbose. As a physicist I have a strong
    stomach for that, but it may not be everyone's cup of tea.
