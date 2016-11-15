@@ -7,6 +7,8 @@ slug = "wordcloud"
 
 +++
 
+![Word cloud](/post/plotcon/wordcloud.png)
+
 I gave a talk at [Plotcon](https://plotcon.plot.ly/) called "Beyond the word
 cloud". It's about two things:
 
