@@ -13,7 +13,7 @@ cloud". It's about two things:
  - word clouds are bad
  - topic models and language embedding are better
 
-Here are the slides and my notes.
+Here are [the slides and my notes](http://mike.place/talks/plotcon_2016/#p1).
 
 It was a very high-level talk. If you'd like to go into more detail on how
 topic models and language embeddings work, please see [the resources I linked
