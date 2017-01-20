@@ -104,6 +104,8 @@ as it lives in `~/.virtualenvs`:
 workon default
 ```
 
+I have `workon default` in my shell startup.
+
 A fresh install of macOS will add the name of the active virtual environment to
 your bash prompt. This is not necessary, but is nice to have. If you want it
 and your system doesn't, or you have specific requirements, then there are lots
