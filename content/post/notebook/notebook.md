@@ -88,7 +88,7 @@ editing in Notebook has come on leaps and bounds. But it doesn't help me write
 PEP8-compliant code, it doesn't have IDE features to navigate a non-trivial
 project and spot bugs, and because it's ultimately a tricked-out `<textarea>`
 for the general user, it will never [behave like my text
-editor](https://github.com/williamsmj/dotfiles-vim).
+editor](https://github.com/williamsmj/dotfiles/tree/master/vim).
 
 ![vim command](/post/notebook/vim.png)
 
