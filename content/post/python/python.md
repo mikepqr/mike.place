@@ -139,7 +139,8 @@ echo source ~/.virtualenvs/my_project/bin/activate" >> ~/my_project/.env
 cd ~/my_project
 ```
 
-The corresponding environment is automatically enabled by this last command.
+The `my_project` environment is now automatically enabled when I `cd` into
+`~/my_project`.
 
 ## Optional extra: pipsi
 
