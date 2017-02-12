@@ -136,14 +136,13 @@ def winnerloser(results):
 def loststates(results):
     '''Return list of states lost by loser.'''
     winner, loser = winnerloser(results)
-    return [state for state, result in results.items()
-            if result[winner] > result[loser]]
+    return {state: result for state, result in results.items()
+            if result[winner] > result[loser]}
 
 
 def evsreqd(results, total=538):
     '''Returns number of addional EVs required by loser to change outcome.'''
-    lost = sum(result['evs'] for state, result in results.items()
-               if state in loststates(results))
+    lost = sum(result['evs'] for state, result in loststates(results).items())
     won = total - lost
     reqd = total//2 + 1 - won
     return reqd
@@ -170,8 +169,7 @@ them, and their EVs in hand, we can apply `complementaryknapsack()`:
 def findflips(results):
     winner, loser = winnerloser(results)
     items = [(state, result[winner] - result[loser] + 1, result['evs'])
-             for state, result in results.items()
-             if state in loststates(results)]
+             for state, result in loststates(results).items()]
     flips, _ = complementaryknapsack(items, evsreqd(results))
     return flips
 
