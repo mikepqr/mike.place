@@ -159,3 +159,8 @@ img {
 .sidebar a:hover {
     text-decoration: none;
 }
+.footer {
+    text-align: center;
+    color: #9a9a9a;
+    margin-bottom: 2em;
+}
