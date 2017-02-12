@@ -151,5 +151,5 @@ path then
 
 ```bash
 curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
-pipsi install flake8
+pipsi install flake8 httpie
 ```
