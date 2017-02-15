@@ -6,9 +6,9 @@ slug = "ecknapsack"
 
 +++
 
-What is the smallest number of Democrats that could change the outcome of
+What is the smallest number of Democrats that could have changed the outcome of
 the 2016 United States presidential election by relocating to another state?
-And where should they move?
+And where should they have moved?
 
 It turns out this question is a variant of the [knapsack
 problem](https://en.wikipedia.org/wiki/Knapsack_problem), an
@@ -77,12 +77,12 @@ the complementary knapsack problem.
 
 ```python
 def complementaryknapsack(items, W):
-    ```
+    '''
     Solve complementary knapsack problem for an iterable of items and knapsack
     capacity W. Each item is a (label, value, weight) triple.
 
     Returns the items selected and their total value.
-    ```
+    '''
     Wtot = sum(weight for label, value, weight in items)
     picks, _ = knapsack(items, Wtot - W)
     complement = [(label, value, weight) for label, value, weight in items
