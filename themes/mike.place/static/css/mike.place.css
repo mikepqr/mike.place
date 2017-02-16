@@ -92,8 +92,10 @@ code {
 pre {
   display: block;
   white-space: pre;
-  white-space: pre-wrap;
   word-break: break-all;
+}
+pre .wrap {
+  white-space: pre-wrap;
   word-wrap: break-word;
 }
 pre code {
@@ -102,7 +104,6 @@ pre code {
   color: inherit;
   background-color: transparent;
 }
-
 blockquote {
   padding: .5rem 1rem;
   margin: .8rem 0;
