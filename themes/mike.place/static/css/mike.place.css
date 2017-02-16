@@ -93,6 +93,7 @@ pre {
   display: block;
   white-space: pre;
   word-break: break-all;
+  overflow-x: auto;
 }
 pre .wrap {
   white-space: pre-wrap;
