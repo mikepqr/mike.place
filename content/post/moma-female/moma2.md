@@ -71,8 +71,8 @@ dataset of unique artists, and take a look at the distribution of inferred
 gender.
 
 ```python
-firsts['Gender'] = firsts['Artist'].apply(infer_gender)
-firsts.groupby('Gender')['Gender'].count()
+firsts.loc[:, 'Gender'] = firsts['Artist'].apply(infer_gender)
+firsts.groupby('Gender').size()
 ```
 
 ```markdown
@@ -118,10 +118,8 @@ hierarchical index, which we turn into a regular DataFrame using the
 
 ```python
 gender_trends = (firsts
-                 .groupby(
-                     [pd.Grouper(key='DateAcquired', freq='5A'), 'Gender']
-                 )['DateAcquired']
-                 .count()
+                 .groupby([pd.Grouper(key='DateAcquired', freq='5A'), 'Gender'])
+                 .size()
                  .unstack())
 
 gender_trends['percent female'] = 100. * gender_trends['female'] / (gender_trends['male'] + gender_trends['female'])
@@ -130,8 +128,7 @@ gender_trends['percent female'] = 100. * gender_trends['female'] / (gender_trend
 We can now plot this ratio.
 
 ```python
-fig, ax = plt.subplots()
-gender_trends['percent female'].plot()
+ax = gender_trends['percent female'].plot()
 ax.set_title('Estimated percentage of new artists added to the MOMA collection who are female')
 ax.set_xlabel('')
 ax.plot(ax.get_xlim(), [50, 50], 'r--')
@@ -156,9 +153,9 @@ future if this trend continues at the present rate.
 
 ```python
 fig, ax = plt.subplots()
-ax.set_ylim(0, 100);
-ax.set_xlim(1930, 2300);
-sns.regplot(x=gender_trends.reset_index()['DateAcquired'].apply(lambda x: x.year),
+ax.set_ylim(0, 100)
+ax.set_xlim(1930, 2300)
+ax = sns.regplot(x=gender_trends.reset_index()['DateAcquired'].apply(lambda x: x.year),
             y=gender_trends["percent female"])
 ax.set_title('Estimated percentage of new artists added to the MOMA collection who are female')
 ax.set_xlabel('')

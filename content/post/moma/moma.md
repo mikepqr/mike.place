@@ -127,20 +127,20 @@ let's break it down:
  - You can iterate over this list, but it's usually more useful to perform an
    aggregation on it, i.e. to collapse each DataFrames the `DataFrameGroupBy`
    object into a single row. I just want to know how many items there are in
-   each class, so I use `.count()`.
- - `moma.groupby('Classification')['Classification'].count()` is then a pandas
+   each class, so I use `.size()`.
+ - `moma.groupby('Classification').size()` is then a pandas
    Series, which we can sort and plot as a horizontal bar graph
    (`kind='barh'`).
 
 
 ```python
-fig, ax = plt.subplots()
-ax.set_title('All items')
-ax.set_xlabel('Count')
+ax = (moma.groupby('Classification')
+      .size()
+      .sort_values()
+      .plot(kind='barh'))
 
-(moma.groupby('Classification')['Classification'].count()
- .sort_values()
- .plot(kind='barh'));
+ax.set_title('All items')
+ax.set_xlabel('Count');
 ```
 
 
@@ -151,13 +151,13 @@ We can do the same thing by `Department`.
 
 
 ```python
-fig, ax = plt.subplots()
-ax.set_title('All items')
-ax.set_xlabel('Count')
+ax = (moma.groupby('Department')
+      .size()
+      .sort_values()
+      .plot(kind='barh'))
 
-(moma.groupby('Department')['Department'].count()
- .sort_values()
- .plot(kind='barh'));
+ax.set_title('All items')
+ax.set_xlabel('Count');
 ```
 
 
@@ -173,22 +173,21 @@ provides a way to select those out.
 
 Which artists have the most items in the MOMA collection?
 
-We can do this with the same `groupby()`, `count()` and `sort_values()`
+We can do this with the same `groupby()`, `size()` and `sort_values()`
 operations. The only difference here is that I add a `tail()` after the
 `sort()`, which gives us a list of the top 20 artists (`sort_values()` is
 ascending by default).
 
 
 ```python
-fig, ax = plt.subplots()
-ax.set_title('Artists with the most items in the MOMA collection (top 20)')
-ax.set_xlabel('Count')
-
-(moma.groupby('Artist')['Artist']
- .count()
+(moma.groupby('Artist')
+ .size()
  .sort_values()
  .tail(20)
- .plot(kind='barh'));
+ .plot(kind='barh'))
+
+ax.set_title('Artists with the most items in the MOMA collection (top 20)')
+ax.set_xlabel('Count');
 ```
 
 
@@ -206,16 +205,15 @@ Series is `False` are filtered out.
 
 
 ```python
-fig, ax = plt.subplots()
-ax.set_title('Artists with the most items in the MOMA Painting & Sculpture department (top 20)')
-ax.set_xlabel('Count')
-
 (moma[moma['Department'] == 'Painting & Sculpture']
- .groupby('Artist')['Artist']
- .count()
+ .groupby('Artist')
+ .size()
  .sort_values()
  .tail(20)
- .plot(kind='barh'));
+ .plot(kind='barh'))
+
+ax.set_title('Artists with the most items in the MOMA Painting & Sculpture department (top 20)')
+ax.set_xlabel('Count');
 ```
 
 
@@ -252,22 +250,23 @@ Rather, we use the `.dt` accessor to pull out the datetime object, and then the
 fig, ax = plt.subplots(3, 1);
 ylabel = 'Acquisitions'
 
-(moma.groupby(pd.Grouper(freq='A', key='DateAcquired'))['DateAcquired']
- .count()
+(moma.groupby(pd.Grouper(freq='A', key='DateAcquired'))
+ .size()
  .plot(ax=ax[0]))
 
 (moma
- .groupby(moma['DateAcquired'].dt.month)['DateAcquired']
- .count()
+ .groupby(moma['DateAcquired'].dt.month)
+ .size()
  .plot(ax=ax[1]))
 
 (moma.
- groupby(moma['DateAcquired'].dt.weekday)['DateAcquired']
- .count()
+ groupby(moma['DateAcquired'].dt.weekday)
+ .size()
  .plot(ax=ax[2]))
 
-months = {0: '_', 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun',
-          7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec'}
+months = {0: '_', 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 
+        5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 
+        10: 'Oct', 11: 'Nov', 12: 'Dec'}
 days = {0: 'Mon', 1: 'Tue', 2: 'Wed', 3: 'Thu', 4: 'Fri', 5: 'Sat', 6: 'Sun'}
 
 ax[0].set_title('MOMA acquisition trends with time')
@@ -294,8 +293,8 @@ and construct a boolean Series with which to filter the DataFrame.
 ```python
 (moma[(moma['DateAcquired'] > '1964-01-01') &
       (moma['DateAcquired'] < '1964-12-31')]
- .groupby([pd.Grouper(freq='D', key='DateAcquired')])['DateAcquired']
- .count())
+ .groupby([pd.Grouper(freq='D', key='DateAcquired')])
+ .size())
 ```
 
 ```markdown
@@ -338,8 +337,8 @@ firsts = moma.drop_duplicates('Artist')
 
 fig, ax = plt.subplots(figsize=(14, 3))
 
-(firsts.groupby(pd.Grouper(key='DateAcquired', freq='A'))['DateAcquired']
- .count()
+(firsts.groupby(pd.Grouper(key='DateAcquired', freq='A'))
+ .size()
  .plot())
 
 ax.set_xlabel('');
@@ -358,8 +357,8 @@ people are.
 
 ```python
 top = list(moma[moma['Department'] == 'Painting & Sculpture']
-            .groupby('Artist')['Artist']
-            .count()
+            .groupby('Artist')
+            .size()
             .sort_values()
             .tail(8)
             .index)
@@ -373,10 +372,10 @@ filter out people who are not in that list.
 with sns.color_palette(palette='husl', n_colors=8):  # more than 6 colors
     fig, ax = plt.subplots()
 
-    (moma[moma['Artist'].isin(top)
-          & (moma['Department'] == 'Painting & Sculpture')]
-     .groupby([pd.Grouper(freq='10A', key='DateAcquired'), 'Artist'])['DateAcquired']
-     .count()
+    (moma[moma['Artist'].isin(top) &
+          (moma['Department'] == 'Painting & Sculpture')]
+     .groupby([pd.Grouper(freq='10A', key='DateAcquired'), 'Artist'])
+     .size()
      .unstack()
      .plot(ax=ax))
     
