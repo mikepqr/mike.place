@@ -21,7 +21,8 @@ and legacy Python 2.
 brew install python python3
 ```
 
-Optionally (and this is not Python related), update git and intall some goodies:
+Optionally (and this is not Python related), update git and install some
+goodies:
 ```bash
 brew install git bash macvim
 brew linkapps macvim
