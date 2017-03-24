@@ -16,3 +16,6 @@
 [submodule "static/talks/plotcon_2016"]
 	path = static/talks/plotcon_2016
 	url = git@github.com:fastforwardlabs/talk_summarization.git
+[submodule "static/talks/ppp"]
+	path = static/talks/ppp
+	url = /Users/mike/p/talks/2017-02-pp

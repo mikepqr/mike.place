@@ -31,17 +31,22 @@ sudo chsh -s /usr/local/bin/bash $USER
 
 ## All systems
 
-Install/update the [Python packaging
+Bootstrap pip:
+```bash
+python -m ensurepip --user
+python3 -m ensurepip --user
+```
+
+This will result in an error on Debian/Ubuntu systems, but won't do any harm.
+
+Then install/update the [Python packaging
 basics](https://glyph.twistedmatrix.com/2016/08/python-packaging.html) in your
 "global" Pythons. These global Pythons will be the system versions on a Linux
 system, or the homebrew versions on macOS (assuming you've installed homebrew
 as described above):
-
 ```bash
-python -m ensurepip --user
 python -m pip install --user --upgrade pip virtualenv wheel
-python3 -m ensurepip --user
-python3 -m pip install --user --upgrade virtualenv wheel
+python3 -m pip install --user --upgrade pip virtualenv wheel
 ```
 
 Now, never touch the global Python's again, or at least never install any
