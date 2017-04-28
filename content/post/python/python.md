@@ -10,10 +10,10 @@ slug = "python"
 As of January 2017, this is how I set up Python on a new Unix/macOS machine. I
 have much of this in a single script, but I'm going to break it down
 line-by-line here. You don't need to sudo or run any of this as root. All of it
-can be easily undone. Just delete the broken virtual environment (or
+can be easily undone. Just delete the virtual environment that ails you (or
 `~/.virtualenvs` if you want to start completely from scratch).
 
-## macOS only prerequsite
+## macOS-only prerequsite
 
 Install homebrew and use it to install isolated, up-to-date versions of Python
 and legacy Python 2.
@@ -73,10 +73,12 @@ workon () {
 mkvirtualenv () {
     deactivate 2> /dev/null || true
     python3 -m virtualenv ${HOME}/.virtualenvs/${1}
+    workon ${1}
 }
 mkvirtualenv_legacy () {
     deactivate 2> /dev/null || true
     python2 -m virtualenv ${HOME}/.virtualenvs/${1}
+    workon ${1}
 }
 ```
 
@@ -126,7 +128,7 @@ basics:
 
 ```bash
 workon default
-pip install numpy scipy jupyter sklearn pandas matplotlib seaborn
+pip install numpy scipy jupyter sklearn pandas matplotlib seaborn pytest
 ```
 
 ## Optional extra: autoenv
