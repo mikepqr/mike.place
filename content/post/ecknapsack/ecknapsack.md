@@ -92,7 +92,7 @@ def complementaryknapsack(items, W):
 ```
 
 The final piece of the puzzle is the vanilla knapsack solver itself,
-[`knapsack()`](https://github.com/williamsmj/ecknapsack/blob/master/ecknapsack.py#L75-L113).
+[`knapsack()`](https://github.com/williamsmj/ecknapsack/blob/master/ecknapsack.py#L71-L109).
 I won't reproduce it here, but it's a standard dynamic programming solution.
 Like `complementaryknapsack()` it takes an iterable `items`, each element of
 which is a `(label, value, weight)` triple, and a capacity, and returns the
