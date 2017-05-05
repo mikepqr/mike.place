@@ -159,5 +159,7 @@ path then
 
 ```bash
 curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
-pipsi install flake8 httpie
+pipsi install flake8
+pipsi install httpie
+pipsi install magic-wormhole
 ```
