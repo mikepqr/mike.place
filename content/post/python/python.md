@@ -24,8 +24,8 @@ brew install python python3
 Optionally (and this is not Python related), update git and install some
 goodies:
 ```bash
-brew install git bash macvim
-brew linkapps macvim
+brew install git bash
+brew cask install macvim
 sudo chsh -s /usr/local/bin/bash $USER
 ```
 
