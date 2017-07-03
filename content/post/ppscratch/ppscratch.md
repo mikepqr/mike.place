@@ -1,5 +1,5 @@
 +++
-Description = "Probabilistic programming from scratch with Approximate Bayesian Computation"
+Description = "The background to my O'Reilly series on probabilistic programming from scratch"
 date = "2017-07-02T23:22:10-07:00"
 menu = ""
 title = "Probabilistic programming from scratch"
