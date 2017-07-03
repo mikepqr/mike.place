@@ -3,7 +3,7 @@ Description = "The background to my O'Reilly series on probabilistic programming
 date = "2017-07-02T23:22:10-07:00"
 menu = ""
 title = "Probabilistic programming from scratch"
-
+thumbnail = "post/ppscratch/compareposteriors.png"
 +++
 
 O'Reilly just published a series of Orioles (interactive video tutorials) by me
@@ -13,7 +13,7 @@ for free. A Safari login is required for [the
 Orioles](https://www.safaribooksonline.com/search/?query=%22Probabilistic%20Programming%20from%20Scratch%22&extended_publisher_data=true&highlight=true&is_academic_institution_account=false&source=user&include_assessments=false&include_courses=true&include_orioles=true&include_playlists=true&publishers=O%27Reilly%20Media%2C%20Inc.&field=title&sort=relevance&utm_source=oreilly&utm_medium=newsite&utm_campaign=probabilistic-programming-from-scratch-top-cta-orioles-link)
 themselves.
 
-## The approach: from scratch, with simulation
+## The approach: from scratch, by simulation
 
 My goal in the series is that you understand every line of code. I attempt to
 ensure this by implementing things from scratch, and choosing a Bayesian
