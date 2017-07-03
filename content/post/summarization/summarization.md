@@ -28,7 +28,7 @@ Now LDA is available in scikit-learn, it's tempting to skip the mathematics of
 topic modelling entirely. But don't. At least cover these two resources.
 
  - Tim Hopper's talk at PyData NYC 2015 ([video](https://youtu.be/_R66X_udxZQ),
-   [notebook](github.com/tdhopper/pydata-nyc-2015)) is an extremely clear
+   [notebook](http://github.com/tdhopper/pydata-nyc-2015)) is an extremely clear
    introduction to the generative process LDA assumes
  - [*Probabilistic Topic
    Models*](https://www.cs.princeton.edu/~blei/papers/Blei2012.pdf) by David
