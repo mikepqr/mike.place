@@ -69,10 +69,10 @@ the host doesn't respond to a ping command within one second. This may not be
 what you need for your server, but it works for me:
 
 ```bash
-$ local-accessible server.example.com &>/dev/null && echo "❌" || echo "✅"
-❌
-$ local-accessible gateway.example.com &>/dev/null && echo "❌" || echo "✅"
-✅
+$ local-accessible gateway.example.com &>/dev/null && echo "OK" || echo "FAIL"
+OK
+$ local-accessible server.example.com &>/dev/null && echo "OK" || echo "FAIL"
+FAIL
 ```
 
 `~/.ssh/config` then looks like this:
