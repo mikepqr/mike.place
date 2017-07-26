@@ -64,8 +64,8 @@ computer's ability to repeat calculations.
 
 Here's the entire Approximate Bayesian Computation algorithm:
 
- 1. Draw a sample from prior
- 2. Simulate the process you observed assuming the sample from the prior is the
+ 1. Draw a sample from the prior
+ 2. Simulate the process you observed, assuming the sample from the prior is the
     correct value
  3. If the outcome of simulation matches the data you observed, the sample from
     prior is now a sample from posterior
