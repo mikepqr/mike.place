@@ -66,10 +66,6 @@ p {
 strong {
   color: #303030;
 }
-ul, ol, dl {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
 dt {
   font-weight: bold;
 }
@@ -144,8 +140,13 @@ img {
   margin-bottom: 1rem;
   color: #9a9a9a;
 }
+.list-item {
+  display: flex;
+}
 .list-date {
   color: #9a9a9a;
+  flex-shrink: 0;
+  margin-right: 0.8rem;
 }
 
 .sidebar ul {

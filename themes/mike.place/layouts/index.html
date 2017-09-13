@@ -9,14 +9,14 @@
 
 <div class="posts">
 
-    <ul>
   {{ range .Data.Pages }}
     {{ if eq .Type "post"}}
-      <li><span class="list-date">{{ .Date.Format "2006-01-02" }}</span> &middot; <a href="{{ .Permalink }}">{{ .Title }}</a>
-      </li>
+      <div class="list-item">
+          <div class="list-date">{{ .Date.Format "2006-01-02" }}</div>
+          <div class="list-title"><a href="{{ .Permalink }}">{{ .Title }}</a></div>
+      </div>
     {{ end }}
   {{ end }}
-    </ul>
   
 </div>
 </div>
