@@ -1,17 +1,21 @@
 +++
 date = "2017-01-19T22:33:07-05:00"
-title = "Setting up Python for development on a new Unix machine"
+title = "Setting up Python on a Unix machine (without pyenv)"
 menu = ""
 Description = ""
 slug = "python"
 
 +++
 
-As of January 2017, this is how I set up Python on a new Unix/macOS machine. I
-have much of this in a single script, but I'm going to break it down
-line-by-line here. You don't need to sudo or run any of this as root. All of it
+If I don't need access to multiple Python versions, but do want multiple
+virtual environments, this is how I set up Python on a new Unix/macOS
+machine. You don't need to sudo or run any of this as root. All of it
 can be easily undone. Just delete the virtual environment that ails you (or
 `~/.virtualenvs` if you want to start completely from scratch).
+
+Note: this post is about how to set up multiple Python _environments_ on a
+development machine. It doesn't cover how to have multiple Python
+_interpreters_ on a single machine. I have [another post]() about that.
 
 ## macOS-only prerequsite
 
