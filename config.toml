@@ -11,9 +11,9 @@ MetaDataFormat = "toml"
     category = "categories" 
     tag = "tags" 
 [author] 
-    name = "Mike Williams" 
+    name = "Mike Lee Williams" 
 [permalinks]
     post = "/:year/:slug/"
     page = "/:slug/"
 [params]
-  description = "The website of Mike Williams"
+  description = "The website of Mike Lee Williams"
