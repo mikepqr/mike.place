@@ -131,7 +131,7 @@ img {
   margin-right: auto;
 }
 
-.page, .post {
+.page, .post, .posts:last-child {
   margin-bottom: 4em;
 }
 .post-date {
