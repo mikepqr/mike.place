@@ -132,7 +132,7 @@ database](http://www.h1bdata.info/). The salaries of people on H-1B visas are
 matters of public record. You can search by title and employer. It's not
 impossible you'll find the salaries of people who work where you've applied,
 doing exactly the job you've applied for. There's nothing like knowing the
-salary of your interviewer to levels the playing field during negotiations.
+salary of your interviewer to level the playing field during negotiations.
 
 Both data sources are flawed. Naively applied, the O'Reilly formula tells you
 that you should subtract $5000-6000 from your salary if your gender is female.
@@ -142,16 +142,16 @@ expectations or demands based on this (or any other) tendency in their data.
 In aggregate, the H-1B data is perhaps even more problematic than the O'Reilly
 data. It's dodgy data about a biased sample.
 
-The sample is flawed because H-1B visa holders are atypical. In some situations
-they are hired precisely because they have lower salary expectations than US
-residents (paying them less than the prevailing rate violates the terms of
-their Labor Condition Application, but it happens). In other situations the
+The H-1B _sample_ is flawed because H-1B visa holders are atypical. In some
+situations they are hired precisely because they have lower salary expectations
+than US residents (paying them less than the prevailing rate violates the terms
+of their Labor Condition Application, but it happens). In other situations the
 employer puts up the with expense and delay of the visa application because
 they have unique skills that also make them more valuable.
 
-The data is flawed because the salary information is only recorded at the time
-the offer was made, since which it has presumably increased, and it does not
-include bonuses or non-cash compensation.
+The H-1B _data_ is flawed because the salary information is only recorded at
+the time the offer was made, since which it has presumably increased, and it
+does not include bonuses or non-cash compensation.
 
 But some information is better than none.
 
