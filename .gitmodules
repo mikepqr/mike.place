@@ -1,6 +1,3 @@
-[submodule "static/talks/astrohackny"]
-	path = static/talks/astrohackny
-	url = git@github.com:williamsmj/talk-20160517-astrohackny.git
 [submodule "static/talks/insight"]
 	path = static/talks/insight
 	url = https://github.com/williamsmj/talk_20160601_insight
