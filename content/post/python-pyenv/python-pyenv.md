@@ -30,8 +30,9 @@ But the approach described below works well for me on a single Unix machine.
 multiple versions of Python on a single machine.
 
 Note: pyenv is a tool for managing multiple versions of Python _interpreters_.
-`pyvenv` is a (now-deprecated) command line tool distributed with Python to
-create _virtual environements_ (synonymous with typing `python -m venv`)
+`pyvenv` (note the extra `v`) is a (now-deprecated) command line tool
+distributed with Python to create _virtual environments_. It is effectively a
+shell alias for `python -m venv`)
 
 On macOS you can install pyenv with
 
