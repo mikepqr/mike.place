@@ -41,6 +41,11 @@ On macOS with homebrew you can install fzf with
 brew install fzf
 ```
 
+Now is a good time to run it's post-install script, which sets up some keyboard
+shortcuts we'll be using later. If you installed with homebrew, you can do this
+by running `/usr/local/opt/fzf/install`. See the documentation for other
+operating systems.
+
 Once it's installed, run this command
 
 ```
@@ -98,7 +103,7 @@ Make sure you followed the fzf installation instructions to configure these
 shortcuts in your shell, e.g. if you installed with homebrew, run
 `/usr/local/opt/fzf/install`.
 
-Then set the following environment variables in your shell startup:
+Then set these environment variables in your shell startup:
 
 ```
 export FZF_DEFAULT_COMMAND="fd . $HOME"
