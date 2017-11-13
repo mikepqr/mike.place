@@ -187,9 +187,9 @@ exiting a directory. You can either put these variables directly in
 
     export $PROJECT_ENV_VARIABLE=foo
 
-or, if they are defined in another file, add 
+or, if they are defined in another file `environment-variables-file`, add 
 
-    dotenv environment-variables
+    dotenv environment-variables-file
 
 to `~/.project/.envrc`.
 
