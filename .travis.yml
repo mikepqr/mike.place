@@ -1,0 +1,18 @@
+dist: trusty
+
+language: go
+
+go:
+    - 1.9.x
+
+install:
+    - rm -rf public || exit 0
+    - go get -u github.com/spf13/hugo
+    - pip install --user urllib3[secure]
+    - pip install --user awscli
+
+script:
+    - hugo
+    - aws s3 sync --delete ./public s3://mike.place
+    - aws configure set preview.cloudfront true
+    - aws cloudfront create-invalidation --distribution-id=${AWS_CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
