@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Probabilistic programming from scratch</title>
+    <link rel="stylesheet" href="presentation.css">
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, height=device-height, initial-scale=1" name="viewport">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="mike.place">
+  <meta name="twitter:url" content="/talks/ppscratch/">
+  <meta name="twitter:title" content="Probabilistic programming from scratch">
+  <meta name="twitter:description" content="Slides for QCon NYC 2018 talk by Mike Lee Williams">
+  <meta name="twitter:image" content="/talks/ppscratch/slides/slides.001.jpeg">
+
+  </head>
+  <body>
+
+    <header>
+      <h1>Probabilistic programming from scratch</h1>
+      <h2><center>Mike Lee Williams &middot; QCon NYC 2018</center></h2>
+
+      <div class="share">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet"
+     
+     data-size="large">
+    Tweet
+  </a>
+  
+</div>
+    </header>
+
+    <div class="presentation">
+      <table class="slides">
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.001.jpeg" />
+            </td>
+            <td class="note">
+              <a name="1"></a>
+              I’m Mike, and I’m a research engineer on Cloudera’s machine learning services team, Fast Forward Labs
+              <a href="#1">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.002.jpeg" />
+            </td>
+            <td class="note">
+              <a name="2"></a>
+              Among other things, Fast Forward Labs writes technical reports and build prototypes on new ideas in machine learning. Here’s our back catalog. It’s a team effort, and what I’ll be talking about today builds off that work.
+              <a href="#2">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.003.jpeg" />
+            </td>
+            <td class="note">
+              <a name="3"></a>
+              Here’s the roadmap for what we’ll be getting into today. We’re going to talk about why a particular approach to real world data is great, how you take that approach by hand yourself, why you might in fact not want to, and what the real world options are.<br /><br />In particular, we’re going to implement a particularly simple Bayesian inference algorithm from scratch, in very few lines of Python. In so doing, we’re going to build a probabilistic programming system. My hope is that, although our system is going to be slow, you’ll leave with a pretty deep intuition for what’s going on under the hood of the real world alternatives. And in implementing it in code, we’ll be able to avoid the maths entirely.
+              <a href="#3">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.004.jpeg" />
+            </td>
+            <td class="note">
+              <a name="4"></a>
+              The first point I want to make, is that Bayesian inference is great. We’ll get into the details of how it works later, but this first section is about why you’d go to the trouble? What does it offer?
+              <a href="#4">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.005.jpeg" />
+            </td>
+            <td class="note">
+              <a name="5"></a>
+              We’re going to use this recurring example: an A/B test in which layout A has a 4% conversion rate (where “conversions” are mailing list signups, purchases, whatever), and layout B has a 5% rate. Obviously layout B is better, so we should go with that, right?
+              <a href="#5">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.006.jpeg" />
+            </td>
+            <td class="note">
+              <a name="6"></a>
+              Why is layout B better? Well, 5 is a bigger number than 4. We’re not going to get a Fields Medal for that, but let me show you that 5 is a bigger number than 4 or in a slightly weird, pedantic way. The reason I’m doing this will become clear later. The reason I know 5 is bigger than 4 (and therefore B is better) is that the X placed on this plot, which is the outcome of our experiment, is above the line. So let’s ship layout B. Talk over, right?
+              <a href="#6">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.007.jpeg" />
+            </td>
+            <td class="note">
+              <a name="7"></a>
+              Not so fast. What if I tell you that updating the layout of our website costs $1m? The stakes are high! And what if I tell you that layout A only had 25 visitors, one of whom converted (that’s still 4%), while layout B had 20 visitors, one of whom converted (5%). Hopefully you’re now much less confident that you know layout B is better than layout A. But the question is: how confident are you? How will you know when you’re confident enough? Quantitatively measuring that confidence is where Bayesian inference comes in.
+              <a href="#7">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.008.jpeg" />
+            </td>
+            <td class="note">
+              <a name="8"></a>
+              This is the Bayesian inference “pipeline”. We need two inputs: our beliefs before we get some new data, and the new data. Those two things are reconciled inside the Bayesian inference “black box” (which we’ll open up later), and the output is revised beliefs that incorporate what we knew before we got the data, and the data. With those revised beliefs we can deploy a model, just like any other machine learning model, that makes predictions. Or perhaps more concretely, we can make decisions such as going with layout A or layout B.<br /><br />Incorporating our beliefs is a formal, mathematical version of the statement that “extraordinary claims require extraordinary evidence”. The corollary of that is “plausible claims require less evidence”. Those beliefs we input tell the algorithm how extraordinary the “claim” made by the data is.
+              <a href="#8">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.009.jpeg" />
+            </td>
+            <td class="note">
+              <a name="9"></a>
+              Now, what are “beliefs”. I’m avoiding maths entirely in this talk, but I want to introduce two important pieces of jargon: the prior and posterior distributions. They’re exactly what we called our “beliefs” and our “revised beliefs” on the previous slide.<br /><br />Let’s imagine that we’ve used layout A before, perhaps last summer. We think it’s conversion fraction is around 3 or 4%. We wouldn’t rule out 2%, or even 6%, but we’d pretty much rule out 10%. That’s what the prior distribution on the left does. That’s one of the inputs. The other input is the data, which was 1 conversion out of 25 visitors. Applying Bayes to those inputs gives us the posterior on the right.<br /><br />The crucial thing to note about the posterior is that it is narrower and taller than the prior. Narrower and taller in the context of belief means we are more certain. And that makes sense: we learned something from the experiment!
+              <a href="#9">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.010.jpeg" />
+            </td>
+            <td class="note">
+              <a name="10"></a>
+              Suppose for layout B we genuinely knew nothing about its conversion fraction. Well, not nothing. Of course we’re logically certain that the conversion fraction is greater than 0 and less than 100%. In this situation we have a “uniform” prior distribution from 0 to 100%. I’ve truncated the x-axis at 10% here.<br /><br />Apply Bayes to that prior and the data for layout B (one conversion out of 20), and we get the posterior on the right. And at this point we’re nearly finished. The posteriors are what we use to answer arbitrary, specific questions. So, remember this is an A/B test. Our question is “A or B”?
+              <a href="#10">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.011.jpeg" />
+            </td>
+            <td class="note">
+              <a name="11"></a>
+              We answer that like this: we plot samples from both posterior distributions simultaneously (technically this is the “joint posterior”) on that weird plot I used to prove that 5 is bigger than 4. If we do that we get this “cloud” of points. Two say which layout it better, we simply and exactly compare the fraction of points above and below the line. So in this case, we’re 86.5% confident layout B is better than layout A. That’s an honest, complete description of what we know after the experiment. Whether that’s confident enough to bet $1m is another question, but we have all the information that data can tell us.<br /><br />And we can use this cloud of points to say how confident we are about the answers to other concrete questions by comparing the fraction of points on either side of different lines. We could, for example, say how confident we are that layout B’s conversion fraction is about 8%. Or how confident we are that layout B’s conversion fraction is at least twice that of layout A.
+              <a href="#11">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.012.jpeg" />
+            </td>
+            <td class="note">
+              <a name="12"></a>
+              Back to the simple “A or B” question: what if that 13.5% of being wrong is more than we can live with? Well, of course we get more data. And Bayes makes it easier to incorporate that data, simply by using the revised beliefs that are the output of the pipeline, along with new data as the input to another round of inference.<br /><br />If you do that, you get something like this. As more visitors arrive (in batches of 80 in this case), the posterior distribution becomes narrower and taller, corresponding to growing confidence. Eventually we’ll become sufficiently confident that one of the layouts is best. I don’t have to use batches of 80. This could be a distribution that updates with each and every visitor. Imagine having that as a dashboard in your boardroom. You could stop the A/B test (and stop showing people a less effective layout) as soon as possible. This makes you money!<br /><br />
+              <a href="#12">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.013.jpeg" />
+            </td>
+            <td class="note">
+              <a name="13"></a>
+              We’ve now seen all three of the advantages of Bayes I mentioned in the outline: you can quantify risk (or confidence, or uncertainty), you can incorporate institutional knowledge (our knowing a little bit about layout A before we conduct the test was an example), and the dashboard that provides a live picture of our confidence is online learning.<br /><br />But I glossed over how what happens inside the box labeled “Bayesian inference” in the pipeline. Let’s look at that in more detail. Rather than looking at it mathematically, in honor of the fact that we’re on the CS track here at Qcon, we’re going to write some code. And in fact they code we’ll right is exactly what I used to generate all the plots in this talk.<br /><br />We’re going to use Python, but if you know what a for loop is and you can read English, you’ll be fine.
+              <a href="#13">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.014.jpeg" />
+            </td>
+            <td class="note">
+              <a name="14"></a>
+              This is one way of doing Bayesian inference. It’s a specific algorithm called approximate Bayesian computation. It’s essentially brute force. The function here has three inputs. Two of them were on our pipeline: they data, and the prior distribution. Concretely the prior distribution is a Python generator that yields a stream of guesses of the true value of the thing we want to know (such as the conversion fraction). Yielding more guesses around a particular number corresponds to a stronger belief that is the true value. The third input is a function that simulates the process that generated our data.<br /><br />The algorithm works like this: for each guess of the thing we want to know (first line), run a simulation of the process that generated the data. If the outcome of that simulation matches the data (second line) then the guess must have been a good one! Yield that.<br /><br />In other words: we’ve built a filter that takes in a stream of guesses, and allows only the good ones to pass through (where good means a simulation of the experiment assuming the guess is true looked just like the actual results).
+              <a href="#14">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.015.jpeg" />
+            </td>
+            <td class="note">
+              <a name="15"></a>
+              Let’s use this abayes filter to get the posterior distribution of layout B in our A/B test. The first input is the data. Here’s the data: 20 visitors convert out of 400. Pretty simple.
+              <a href="#15">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.016.jpeg" />
+            </td>
+            <td class="note">
+              <a name="16"></a>
+              The next input is this thing that generates guesses of layout B’s conversion fraction, the “prior sampler”. We know nothing about layout B, so this function works: it’s gives us a stream of random numbers between 0 and 1.
+              <a href="#16">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.017.jpeg" />
+            </td>
+            <td class="note">
+              <a name="17"></a>
+              Finally we need a simulate function, that simulates N people visiting our website, and tells us how many of them converted assuming a particular conversion fraction.<br /><br />This is some Python code to do that. If you’re a Python programmer, you’re right that this is very unidiomatic. But it should be legible if you don’t write Python.<br /><br />It’s important to realize here that the simulation is of a random process. Just because the conversion fraction is, say, 10%, that doesn’t mean exactly 10% of visitors convert every time.
+              <a href="#17">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.018.jpeg" />
+            </td>
+            <td class="note">
+              <a name="18"></a>
+              We’re all set: data, prior sampler and simulate function. Using those three as input to abayes gives us an object that generates a stream of good guesses. I’m not going to prove it, but this stream is exactly the posterior distribution.
+              <a href="#18">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.019.jpeg" />
+            </td>
+            <td class="note">
+              <a name="19"></a>
+              We can get as many samples from the posterior as we need. Here’s what we get after 100 samples, 1000 samples, and 10000 samples. 
+              <a href="#19">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.020.jpeg" />
+            </td>
+            <td class="note">
+              <a name="20"></a>
+              And if we get 100,000 samples we get the posterior for layout B I showed you earlier.
+              <a href="#20">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.021.jpeg" />
+            </td>
+            <td class="note">
+              <a name="21"></a>
+              I chose layout B because that’s the one where we know nothing about it except, logically the conversion fraction must be between 0 and 1. So it’s easier to write the prior sampler for B.<br /><br />On the left is the prior we want for layout A. It’s a little fiddlier to write, but give it a go in your own time if you’re interested. Using abayes to filter out the bad guesses from that prior gives us the posterior on the right.
+              <a href="#21">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.022.jpeg" />
+            </td>
+            <td class="note">
+              <a name="22"></a>
+              And we can put those together an answer our concrete question!<br /><br />Now, when does Bayesian inference become probabilistic programming? A very simple definition is when you have a way to do Bayesian inference that allows you (and ideally makes it easy) to solve general problems, rather than specifics.
+              <a href="#22">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.023.jpeg" />
+            </td>
+            <td class="note">
+              <a name="23"></a>
+              So to prove we can do more than just A/B tests with abayes, let’s look at a very different problem. This is the famous “German tank problem”, which was a real statistical problem faced by the Allies during WW2. In this scenario, one side in a war produces tanks with monotonically increasing integer serial numbers. There’s a battle, and the other side captures a couple of tanks with specific serial numbers. The question is, how many tanks has the first side manufactured in total? What’s N?<br /><br />We can say two things for sure: first, they’ve made at least 421 tanks. Second, we can say for sure that we can’t actually say anything for sure. We don’t have enough information to figure out N exactly. But we can use the tools we’ve built up to estimate a distribution that tells us how strongly we should believe particular values of N.
+              <a href="#23">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.024.jpeg" />
+            </td>
+            <td class="note">
+              <a name="24"></a>
+              Again, we’ll use abayes. The inputs are data, the prior sampler that generates guesses, and the simulate function.
+              <a href="#24">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.025.jpeg" />
+            </td>
+            <td class="note">
+              <a name="25"></a>
+              The data is easy. The prior sampler function is going to generate random integers in the range 421 to 4999. These random integers will be our guesses about how many tanks they have. The value of the upper limit is not essential. Let’s assume we know it thanks to conventional intelligence. Finally, given an assumed total number of tanks, N, the simulate function picks two random numbers in the range 0 to N-1. Put those in abayes and we have a generator that yields a stream of good guesses for how many tanks have been manufactured.
+              <a href="#25">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.026.jpeg" />
+            </td>
+            <td class="note">
+              <a name="26"></a>
+              And here’s what that distribution looks like! Hopefully this is pretty much what you’d expect.<br /><br />abayes is a function that allows you to solve general Bayesian inference problems. In that sense, it’s a very simple probabilistic programming system. But there’s a problem.
+              <a href="#26">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.027.jpeg" />
+            </td>
+            <td class="note">
+              <a name="27"></a>
+              Remember I said that the approximate Bayesian computation algorithm it uses is “brute force”. That’s your clue: it’s slow. How slow?
+              <a href="#27">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.028.jpeg" />
+            </td>
+            <td class="note">
+              <a name="28"></a>
+              How long did it take me to accumulate the 100, 1000 and 10000 samples from the posterior for this slide?
+              <a href="#28">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.029.jpeg" />
+            </td>
+            <td class="note">
+              <a name="29"></a>
+              If you put a progress bar on the generator, you’ll find your getting 25.84 samples per second. This is pretty slow!
+              <a href="#29">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.030.jpeg" />
+            </td>
+            <td class="note">
+              <a name="30"></a>
+              But it gets worse! What if I double the size of the B test. So instead of 400 visitors, I have 800. The results should be similar, and they are, but the performance is catastrophic.
+              <a href="#30">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.031.jpeg" />
+            </td>
+            <td class="note">
+              <a name="31"></a>
+              Our sampling rate is down by a factor of 4. This is O(N^2) performance, and it’s catastrophic!
+              <a href="#31">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.032.jpeg" />
+            </td>
+            <td class="note">
+              <a name="32"></a>
+              Why so slow? There are clever tricks you can play to speed this algorithm up, and in fact there’s an entire academic field dedicated to it. But they don’t get around the fundamental problem: that for loop has no memory. In other words, it doesn’t learn its mistakes. It will keep simulating experiments using values that it has seen fail thousands of times before.
+              <a href="#32">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.033.jpeg" />
+            </td>
+            <td class="note">
+              <a name="33"></a>
+              The big speedups come from fixing this problem, but fixing it in a mathematically sound way is tricky.
+              <a href="#33">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.034.jpeg" />
+            </td>
+            <td class="note">
+              <a name="34"></a>
+              The next step up the evolutionary tree from our algorithm is called Metropolis Hastings. This is it. I’m not going to explain it today, but if I had 10 more minutes we could cover it. Basically, it says: if things are working out, keep trying guesses round here. Otherwise roll the dice and try somewhere new. But for internet scale problems (lots of data and lots of parameters) this is still not fast enough.
+              <a href="#34">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.035.jpeg" />
+            </td>
+            <td class="note">
+              <a name="35"></a>
+              That’s where HMC with automatic differentiation and the No U-turn Sampler comes in. This is the current applied state of the art. The “Hamiltonian” in its name refers to its origins in physics. Basically what it does is treat those probability distributions as a physical surface, and then simulate a ball moving on that surface under gravity to find the peaks and valleys. This allows it to explore the surface particularly strategically and efficiently.<br /><br />But if we want to build a probabilistic programming system for mortal end-users like you and me, there’s a problem with this approach. In order to explore that surface the user needs to provide not just the distribution but its derivative. Calculus! Oh no! That, as you may have guessed is where automatic differentiation comes in. That allows the algorithm to differentiate the distribution in an exact and computationally efficient way, essentially for free.<br /><br />There’s one final piece of the puzzle if we want to make this tool useful for end users: the No U-turn Sampler. It turns out that you need to set a magic number (roughly equivalent to the learning rate), and that this number is different for every problem, and getting it right is difficult (and therefore time-consuming and error-prone). NUTS handles that problem for us.<br /><br />In the technical sense of the word, autodiff and NUTS make HMC “robust”, which is to say they make them idiot proof.
+              <a href="#35">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.036.jpeg" />
+            </td>
+            <td class="note">
+              <a name="36"></a>
+              We’re finally ready to look at real world probabilistic programming. Let’s take a step back and review what we’ve seen so far. Bayesian inference is great! And we implemented it from scratch with a brute force algorithm. Algorithms that are faster are complicated and best left to graduate students in maths departments. But those algorithms are now “robust”, which means they can be abstracted away in a library.
+              <a href="#36">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.037.jpeg" />
+            </td>
+            <td class="note">
+              <a name="37"></a>
+              But probabilistic programming is more ambitious than just abstracting HMC. It’s a programming paradigm that, yes, comes with things like HMC batteries-included. But it also makes the building blocks of data analysis problems — random variables and probability distributions — primitive components of the language. This means that solving Bayesian inference problems becomes much more declarative. You as the user of these systems simply say what you know about the world, and the computer figures out the implications. Few, if any, imperative code like if statements and for loops.
+              <a href="#37">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.038.jpeg" />
+            </td>
+            <td class="note">
+              <a name="38"></a>
+              The two mature, end-user focused options are PyMC and Stan. Let’s take a quick look at what programs in those languages look like.
+              <a href="#38">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.039.jpeg" />
+            </td>
+            <td class="note">
+              <a name="39"></a>
+              Here’s a solution to that tank problem in PyMC. The first indented line defines the prior. The second defines how the prior and the data are related. The last line is where PyMC uses a fast sampling algorithm to figure out the implications.<br /><br />Note that “DiscreteUniform”. This is one of a toolkit of distributions you can use as building blocks.<br /><br />In the final output, PyMC has chosen to use Metropolis Hastings for this problem. Note in particular that sampling rate: nearly 4000 per second. That’s much better than the 25 or 6 we were getting!
+              <a href="#39">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.040.jpeg" />
+            </td>
+            <td class="note">
+              <a name="40"></a>
+              Here’s a Stan listing to solve a different problem. This models the repayment of a bank loan. If you know machine learning, this is an implementation of logistic regression.<br /><br />The first code block declares variables for the data, i.e. the things we observed. The second block defines the things we want to know. And the final block says how those two things are related.<br /><br />Just like PyMC, Stan is fast!<br /><br />From the user’s point of view, PyMC is a Python module that implements things like HMC and adds some data types to your Python environment. Stan is different. It’s a full Turing-complete programming language. But as a practical matter, people tend to “drive” their Stan programs from the command line, or Python, or R.
+              <a href="#40">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.041.jpeg" />
+            </td>
+            <td class="note">
+              <a name="41"></a>
+              At Fast Forward Labs, we build complete prototypes with frontends using the tools we research. Here’s a consumer credit support tool we built using Stan. It allows the person making the loan to assess the likelihood of loan repayment. But crucially it doesn’t only tell you if someone is going to repay a loan. A person who repays 90% of their loan before defaulting is very different to someone who repays 10% or 50%. This model quantifies all those intermediate possibilities (not just the binary repay/default) possibility. This allows the person making the loan to treat people differently. Assuming they have a good lending strategy, this allows them to make more money!
+              <a href="#41">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.042.jpeg" />
+            </td>
+            <td class="note">
+              <a name="42"></a>
+              The other prototype we built is a tool for assessing your likelihood of being able to afford a home in NYC. Under the hood, it’s essentially a probabilistic model of the NYC real estate market. The probabilistic nature is important. That allows you to answer questions like “I have $1m. What is the probability I’ll be able to afford a home here in Brooklyn in two years?” Or conversely, “I want at least an 80% chance of being able to afford a home in 5 years time. How much do I need now?” These questions can only be answered with the posterior distribution. Regular linear regression doesn’t give you the full picture.<br /><br />This prototype is public, by the way. You can play with it at http://fastforwardlabs.github.io/pre/.
+              <a href="#42">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.043.jpeg" />
+            </td>
+            <td class="note">
+              <a name="43"></a>
+              So, Stan and PyMC are the big ones. Let me briefly and crudely compare them. Very broadly speaking, it’s trickier to build end-to-end products entirely in Stan. That’s because, despite the fact that it’s technically a Turing complete language, it’s not something you’d write a backend in. That means your application is going to have language boundaries. It’s possible! Both our prototypes used Stan. But it’s a little fiddly. And to be fair, it’s not really what Stan is designed for. They have in mind “offline” or batch analysis of data.<br /><br />On the other hand, Stan is fast. PyMC has historically been a little slower. That’s less true than it used to be. And the PyMC team recently announced a plan to migrate their backend (the thing that handles automatic differentiation) to Tensorflow Probability. This is an exciting, ambitious project!<br /><br />Speaking of Tensorflow Probability, that’s another option. If this is your first encounter with probabilistic programming, it’s perhaps not where I’d start, as it’s quite low level. But it’s a Google project, which speaks to the importance of this field. My understanding is it grew out of an open source project called Edward, which was created by a grad student at Columbia who was recently snapped up by Google. Interesting times!<br /><br />Anglican is worth checking out if you’re already familiar with LISP-like languages (it’s a dialect of Clojure), and Figaro if you like Scala (or your deployment target is the JVM). I don’t know much about Pyro, except that it’s made by Uber and it uses Pytorch as a backend.
+              <a href="#43">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.044.jpeg" />
+            </td>
+            <td class="note">
+              <a name="44"></a>
+              So, that whole talk might have felt kind of abstract and academic. Let me end with a concrete, real world application of probabilistic programming at a little organization you might have heard of called Facebook.<br /><br />About a year ago they released Prophet, which is an open source tool to generate forecasts from time series. You could apply it to server logs, IOT data, health data, whatever. Facebook obviously has lots of use for such a tool internally. Crucially, it’s a probabilistic tool. That means the forecasts come with confidences or uncertainties.<br /><br />And its very easy to use. Here’s what we at Fast Forward Labs got in a few minutes when we applied it to a famous time series in atmospheric chemistry. Prophet’s model is the blue line. The data is in black. Note that Prophet does a great job of capturing the long term trends and the seasonality. And note in particular that the forecast comes with a band that indicates confidence.<br /><br />And the punchline of all this is: the Facebook team wrote this tool using Stan. It’s essentially an opinionated but general purpose Stan model wrapped in a analyst-friendly interface. Very cool stuff!
+              <a href="#44">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.045.jpeg" />
+            </td>
+            <td class="note">
+              <a name="45"></a>
+              <a href="http://blog.fastforwardlabs.com/2017/01/30/the-algorithms-behind-probabilistic-programming.html">The algorithms behind probabilistic programming</a><br /><br /><a href="http://fastforwardlabs.github.io/pre/">NYC Real Estate Simulator</a> <br /><br /><a href="https://www.oreilly.com/learning/probabilistic-programming-from-scratch">Probabilistic programming from scratch</a> <br /><br />Or get in touch! <a href="https://twitter.com/mikepqr">@mikepqr</a> or mlw@cloudera.com.
+              <a href="#45">#</a>
+            </td>
+          </tr>
+        
+      </table>
+    </div>
+
+    <footer>
+      <div class="share">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet"
+     
+     data-size="large">
+    Tweet
+  </a>
+  
+</div>
+
+      <p>
+        Generated with
+        <a href="https://github.com/mcfunley/better-keynote-export">
+          better-keynote-export</a>.
+      </p>
+    </footer>
+
+    <script>
+     window.twttr = (function(d, s, id) {
+       var js, fjs = d.getElementsByTagName(s)[0],
+           t = window.twttr || {};
+       if (d.getElementById(id)) return t;
+       js = d.createElement(s);
+       js.id = id;
+       js.src = "https://platform.twitter.com/widgets.js";
+       fjs.parentNode.insertBefore(js, fjs);
+
+       t._e = [];
+       t.ready = function(f) {
+         t._e.push(f);
+       };
+
+       return t;
+     }(document, "script", "twitter-wjs"));
+    </script>
+  </body>
+</html>
