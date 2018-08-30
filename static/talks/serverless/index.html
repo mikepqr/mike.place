@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Serverless for data scientists</title>
+    <link rel="stylesheet" href="presentation.css">
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, height=device-height, initial-scale=1" name="viewport">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="mike.place">
+  <meta name="twitter:url" content="/talks/serverless/">
+  <meta name="twitter:title" content="Serverless for data scientists">
+  <meta name="twitter:description" content="Slides for PyBay 2018 2018 talk by Mike Lee Williams">
+  <meta name="twitter:image" content="/talks/serverless/slides/slides.001.jpeg">
+  </head>
+  <body>
+
+    <header>
+      <h1>Serverless for data scientists</h1>
+      <center><h2>Mike Lee Williams • @mikepqr • mlw@cloudera.com</h2></center>
+      <center><h2><a
+                      href="https://github.com/williamsmj/serverless-for-data-scientists">github.com/williamsmj/serverless-for-data-scientists</a></h2></center>
+
+      <div class="share">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet"
+     
+     data-size="large">
+    Tweet
+  </a>
+  
+</div>
+    </header>
+
+    <div class="presentation">
+      <table class="slides">
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.001.jpeg" />
+            </td>
+            <td class="note">
+              <a name="1"></a>
+              I’m Mike, and I’m a research engineer on Cloudera’s machine learning services team, Fast Forward Labs. <br /><br />Today I’m going to talk about serverless. If you work in operations or mainstream engineering then you’re probably familiar with this idea already. I hope from today’s talk you’ll come away excited about its application to data science and machine learning.<br /><br />If you’re a data scientist, then I hope this will be a useful and interesting tour of an idea that’s newish to you. If you’re currently constrained by your computing resources, serverless is a light-weight alternative to setting up a cluster (or waiting for someone else to set up a cluster).
+              <a href="#1">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.002.jpeg" />
+            </td>
+            <td class="note">
+              <a name="2"></a>
+              These are computers. It’s generally agreed that they were a bad idea.
+              <a href="#2">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.003.jpeg" />
+            </td>
+            <td class="note">
+              <a name="3"></a>
+              One of the wonderful things about the cloud is that the actual hardware is somebody else’s problem. You’re paying Amazon or Google or Microsoft to deal with that. They do a really good job, to the extent that you can largely forget about the physical infrastructure. From the point of view of the cloud user, it’s like getting rid of your hardware completely.
+              <a href="#3">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.004.jpeg" />
+            </td>
+            <td class="note">
+              <a name="4"></a>
+              But moving to the cloud does create a problem. Not always, but it has a tendency to be a very efficient way of setting fire to money. One of the reasons for that is, despite the fact that we associate the cloud with the ability to scale dynamically, inevitably we end up with underutilized long-lived resources such as EC2 instances.
+              <a href="#4">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.005.jpeg" />
+            </td>
+            <td class="note">
+              <a name="5"></a>
+              And we still have the problem of installing, configuring, securing and maintaining our operating system or database or whatever. This is a shame because for many of us it’s not what we want to do with our time. And for most of our employer’s it’s not how they make money. They make money by deploying business logic.
+              <a href="#5">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.006.jpeg" />
+            </td>
+            <td class="note">
+              <a name="6"></a>
+              So what if we could not only get rid of our physical infrastructure, but also the next layer up: the operating system or the container. If we could do that then we could focus entirely on the business logic.
+              <a href="#6">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.007.jpeg" />
+            </td>
+            <td class="note">
+              <a name="7"></a>
+              That is the claim, at least of serverless. Serverless works like this. A request come in to some kind of gateway service. This summons a machine out of thin air and deploys your application on that machine. The new machine figures out the response, sends it back, and then dies a noble death. Another request arrives and the same thing happens. Crucially, between these two requests, you have no infrastructure.<br /><br />Or more generally, the amount of infrastructure you have scales almost linearly with your usage, and that linear scaling has an intercept of zero!<br /><br />By the way, “serverless” is a really bad name, because you still have servers. In fact, you have effectively infinitely many of them. (In that sense, it’s a bit like “nonparametric statistics”, which is “nonparametric” in the sense that you have, well, lots of parameters, rather than in the usual sense of the word “non”, which is that that you have, well, none.)
+              <a href="#7">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.008.jpeg" />
+            </td>
+            <td class="note">
+              <a name="8"></a>
+              Generally, in order to derive the maximum benefits of serverless (i.e. making the operations problems somebody else’s), you need to give money to one of the big cloud providers to use their serverless platforms. These are pretty much your options.<br /><br />The odd one out here is OpenFaaS, which I won’t be talking about, but if you have private infrastructure or particular needs, it might be worth looking into.
+              <a href="#8">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.009.jpeg" />
+            </td>
+            <td class="note">
+              <a name="9"></a>
+              So, that sounds great, but what can we actually do with this effectively infinite supply of short-lived machines.<br /><br />Let’s start with a simple flask application that tells the user the time. If you haven’t seen flask before, there’s some boilerplate, but the important thing is the time function (which returns the time!) and the line immediately before it, which is a decorator. That decorator tells flask that if someone visits the URL /time, it should respond with the result of the function.
+              <a href="#9">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.010.jpeg" />
+            </td>
+            <td class="note">
+              <a name="10"></a>
+              We can “deploy” this app locally by running python app.py. And if we visit localhost we can get the result. Apparently I created this slide at 21:09.<br /><br />But assuming your laptop is firewalled sensibly, and you have aspirations to occasionally put it to sleep, this is not a good place for the app to live long term.
+              <a href="#10">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.011.jpeg" />
+            </td>
+            <td class="note">
+              <a name="11"></a>
+              Which brings us to the first, and most prominent use case for serverless. Let’s deploy our time server on AWS Lambda.
+              <a href="#11">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.012.jpeg" />
+            </td>
+            <td class="note">
+              <a name="12"></a>
+              There’s a lot of fiddly book-keeping involved in Lambda deployment, but the good news is you can avoid it all by using one of a number of command line tools.<br /><br />I recommend a tool called zappa. I like zappa because it’s written in python, and at least in principle it’s agnostic about which of the serverless platforms you deploy to (although in practice it only works on AWS Lambda).<br /><br />The best known alternative is called “serverless” confusingly, but the installation instructions mention npm and I’m like: not today, satan). <br /><br />AWS has their own tool called Chalice, which I’ve never used, but it doesn’t support a use case I’ll mention later, and of course it doesn’t and will never support any target other than AWS Lambda.<br /><br />Here’s how you use zappa. All this code is on the GitHub repo I mentioned at the start. First you create and activate a fresh virtualenv, and install your dependencies. In this case that’s flask. Then run zappa init and you get a bunch of questions (you can accept the defaults).
+              <a href="#12">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.013.jpeg" />
+            </td>
+            <td class="note">
+              <a name="13"></a>
+              That init command creates a configuration file that looks like this. Note it’s auto populated “app.app”. That’s the module and object corresponding to our flask application.
+              <a href="#13">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.014.jpeg" />
+            </td>
+            <td class="note">
+              <a name="14"></a>
+              Then we do zappa deploy, and here’s where the zappa shines. It’s taking care of a huge amount of fiddly stuff here. Most notably, it’s creating a zip file that contains both our application and its dependencies (as defined by what it finds installed in the virtualenvironment), and copying that to AWS. At the end of all the book-keeping, we get a public URL we can use and share to replace 127.0.0.1.
+              <a href="#14">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.015.jpeg" />
+            </td>
+            <td class="note">
+              <a name="15"></a>
+              And it works! <br /><br />Here’s the time on the server, which is 4:30am, rather than 9:30 at night, because AWS runs in UT.<br /><br />In the notes for this talk I show how to upgrade this deployed application to give allow the timezone as a URL parameter. zappa makes that easy, and crucially it has a tail command that consolidates the logs and errors from the components of the deployed application in your terminal, which makes debugging easier.
+              <a href="#15">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.016.jpeg" />
+            </td>
+            <td class="note">
+              <a name="16"></a>
+              Like I say, web operations is the perhaps the best known use of Lambda. But let’s look at another: regularly recurring jobs.
+              <a href="#16">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.017.jpeg" />
+            </td>
+            <td class="note">
+              <a name="17"></a>
+              I created a couple of twitter bots, dwxdtla, and dwxnyc, that tweet today’s weather compared to yesterday’s each morning. These are actually Lambda functions that trigger on a regular schedule.
+              <a href="#17">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.018.jpeg" />
+            </td>
+            <td class="note">
+              <a name="18"></a>
+              I deployed these functions using zappa. Their configuration files illustrate a couple of useful zappa features in bold here. First, you can use a cron-like syntax to create recurring jobs, which map to functions. Second, you can export configuration to Lambda instances in the form of environment variables.<br /><br />I was going to create a San Francisco bot for this talk, but Twitter changed the rules and I’m in a queue now to be revalidated. But if you want to create one of these bots for your location, or you’re interested in cron-like serverless in general or Twitter bots in particular, check out the GitHub repo for this project.
+              <a href="#18">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.019.jpeg" />
+            </td>
+            <td class="note">
+              <a name="19"></a>
+              So we can deploy web applications and run cron jobs. Great. What’s the advantage? Well, there are a couple of big ones from the point of view of the operations and traditional software engineering communities that are worth mentioning: you can focus on business logic, and you get scalability for free.<br /><br />But the advantage that most interests me is this one. Because we only pay for our code while it’s running, and when it’s running we pay in proportion to its usage, without unutilized overhead, it’s often cheap! We’ll dig into what that means for data science in a second, but let me give you an example from a traditional web app deployment.
+              <a href="#19">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.020.jpeg" />
+            </td>
+            <td class="note">
+              <a name="20"></a>
+              Postlight’s Readability API cost about $10,000/month on EC2. They moved it over to AWS Lambda and now it costs $370/month.<br /><br />Now it’s not all sweetness and light. There are disadvantages to this approach from the point of view of web operations. Some of those are shared with microservices in general (complexity, debugging is tricky), and some of those are shared with all cloud deployments (vendor lock-in). For the purposes of the rest of this talk, neither of those is a huge deal, but it’s important to acknowledge them.
+              <a href="#20">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.021.jpeg" />
+            </td>
+            <td class="note">
+              <a name="21"></a>
+              What is a huge deal, and this is not so much a disadvantage as a set of restrictions inherent in serverless, is the nature of these machines that pop in and out of existence.<br /><br />The first of these restrictions is that these are underpowered machines. They have no more than 1.5GB of RAM and a tiny amount of local storage (500MB).<br /><br />Second, they are living on borrowed time. Your function must complete in 300 seconds.<br /><br />Those two are kind of arbitrary, and they vary by cloud provider, and if you are up for running your own serverless platform using OpenFaaS they can be lifted.<br /><br />But the unavoidable restriction, that is inherent in the premise of serverless, is that these short-lived machines have no state. They have no record of previous instances. They even have no direct way of communicating with other running serverless instances. So, side effects like posting to Twitter or writing to a database aside, these serverless instances only support pure functions.
+              <a href="#21">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.022.jpeg" />
+            </td>
+            <td class="note">
+              <a name="22"></a>
+              But this talk is about data science. Here’s a picture of data science to indicate that we are moving into a new phase of the talk.<br /><br />We’ve got these machines that have no internal state and are not very fast. Potentially we’ve got a lot of them. And we only pay for them while we’re using them. This raises interesting possibilities for data scientists!
+              <a href="#22">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.023.jpeg" />
+            </td>
+            <td class="note">
+              <a name="23"></a>
+              The rest of this talk is about those possibilities, and a proof of concept tool called pywren that was first described in this paper. If you haven’t read a CS paper before (or for a while), I highly recommend this paper! But we’re going to look at pywren, which is a tool that maps functions across parameters using Lambda as the computational backend.
+              <a href="#23">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.024.jpeg" />
+            </td>
+            <td class="note">
+              <a name="24"></a>
+              What does map “functions across parameters mean”. Here’s what it looks like locally. The usual approach is to use a list comprehension. You can also use map, which is considered unpythonic, but I want to introduce it here.<br /><br />In python 3, map gives you back a slightly weird object. But no worries. If you call list on it, you “consume” that intermediate object and get the answer.<br /><br />(You might be thinking, by the way, that you should use python 2. In which case, if you’re a data scientist then I want to draw your attention to fact that a little library called numpy will no longer support python 2 for new versions starting in … 4 months!)
+              <a href="#24">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.025.jpeg" />
+            </td>
+            <td class="note">
+              <a name="25"></a>
+              Here’s how you’d apply that same computation using pywren’s map function, which is almost but not quite a drop in replacement for the regular map function. Behind the scenes, it sets up 6 AWS Lambda instances and returns “futures” objects. Don’t worry about what these are. They have a result method that gives us the answer, so again, we have a slightly indirect way to get the answer.
+              <a href="#25">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.026.jpeg" />
+            </td>
+            <td class="note">
+              <a name="26"></a>
+              What’s actually going on when we use pywren? First pywren serializes the function and the data and puts it on s3, and invokes the lambdas. That’s “host submit”.<br /><br />The lambdas start (that’s “task start”). They have to do some setup, which involves pulling and deserializing the job from s3 and installing an anaconda runtime.  That’s “setup done”.<br /><br />They compute the result and write it to s3 (“task done”) where it waits for us to call the result method. When we call that method, we download the result to our client.
+              <a href="#26">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.027.jpeg" />
+            </td>
+            <td class="note">
+              <a name="27"></a>
+              Notice that, those funny map and future objects aside, we don’t need to change much code. In fact, if you wanted to globally use pywren for mapped computation, you could take advantage of the dynamic nature of python and just redefine the map builtin to be one that used pywren.
+              <a href="#27">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.028.jpeg" />
+            </td>
+            <td class="note">
+              <a name="28"></a>
+              What we just saw was an example of our third use case. What is it about this job that made it a candidate for pywren? It was embarrassingly parallel. What does that mean?
+              <a href="#28">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.029.jpeg" />
+            </td>
+            <td class="note">
+              <a name="29"></a>
+              Imagine a field of carrots. Eight rows, each containing ten carrots.
+              <a href="#29">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.030.jpeg" />
+            </td>
+            <td class="note">
+              <a name="30"></a>
+              I have a harvester that can pick one carrot per second. It’s obviously going to take 80 seconds to harvest the carrots.
+              <a href="#30">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.031.jpeg" />
+            </td>
+            <td class="note">
+              <a name="31"></a>
+              What if I have two harvesters. Then the harvesters can work independently and harvest the carrots in half the time.
+              <a href="#31">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.032.jpeg" />
+            </td>
+            <td class="note">
+              <a name="32"></a>
+              And if I have eight harvests I can get it done in 10 seconds. I get a speedup in direct proportion to the number of workers because the tractors can work independently. This is not like co-authoring a book, where the two authors need to exchange information regularly about what they’ve done so far. The tractors are truly independent. There is no inter-worker communication. That’s embarrassingly parallel. <br /><br />Anything in python that you’d normally implement as a list comprehension usually has this characteristic. Some for loops have side effects and are not embarrassingly parallel, but if you can convert a for loop to a comprehension, it’s likely embarrassingly parallel too.
+              <a href="#32">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.033.jpeg" />
+            </td>
+            <td class="note">
+              <a name="33"></a>
+              So here’s another example from my own work. I wanted scrape the abstracts for the many thousands of machine learning papers from a conference website. Doing this on my laptop took a long time because I was scraping them one at a time (or, if I wanted to get clever, I could have written some asynchronous code, or used multiprocessing). But even then I would still have been constrained by the speed of my internet connection.<br /><br />By shifting this map to Lambda with pywren, I could work in parallel and also benefit from AWS’s faster internet connection!<br /><br />Note here I’m not mapping a function that scrapes one paper over a list of papers. I’m mapping a function that scrapes a batch of papers over a list of batches. I’m doing that because scraping one paper is relatively quick, which means that if I map them one at a time then the overhead of setting up Lambda instances dominates. By accumulating lots of pages until that 10 second overhead is worth it, I maximize my speed up.<br /><br />This is pseudocode. The full code (and the resulting dataset) is on GitHub if you’re interested.
+              <a href="#33">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.034.jpeg" />
+            </td>
+            <td class="note">
+              <a name="34"></a>
+              Here’s another example, of parallelizing some pretty beefy numerical calculations. The Black-Scholes equation is a partial differential equation that describes the evolution of a stock option. Bradford Lynch wanted to solve it for many millions of configurations. Again, with only a couple of changes to his code, he was able to get a 270x speedup.<br /><br />On the GitHub link at the start of this talk there are also examples of long-lived embarrassingly parallel ETL loads such as video encoding. Those are cool, but I’d call them data engineering rather than data science.<br /><br />I find using Lambda interactively with pywren, for things like web scraping, or notebook-like exploration, more compelling. The reason is, it’s in that interactive mode that Lambda’s cost savings are most apparent. Think about data exploration in a notebook: the vast majority of that time is spent thinking, not waiting for the computer. And if that expensive computer is always on (like a spark cluster), that’s a waste of money. A cluster that can be spun up and destroyed quickly (which is effectively what pywren offers), is super compelling to me as a data scientist!
+              <a href="#34">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.035.jpeg" />
+            </td>
+            <td class="note">
+              <a name="35"></a>
+              Finally I want to talk about machine learning! In general, machine learning algorithms are a little tricky to parallelize. Distributed gradient descent for example is a famously subtle algorithmic problem, even before you get to the question of the system you’re distributing over. <br /><br />But one part of the ML workflow that’s a good fit for pywren out of the box is hyperparameter optimization. And I want to close the loop by looking again at web operations with zappa, and showing how we data scientists can throw off the shackles of our engineering overlords and put our own models into production.
+              <a href="#35">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.036.jpeg" />
+            </td>
+            <td class="note">
+              <a name="36"></a>
+              So! We have some training data. Two classes. Two features.
+              <a href="#36">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.037.jpeg" />
+            </td>
+            <td class="note">
+              <a name="37"></a>
+              We can train a model for this data locally like this. I’m using K-nearest neighbors, which gives me 83.8% accuracy. KNN classifies a point by looking at the labels of the K points closest to it in the training set and taking a vote. Very simple.<br /><br />That number K is a “hyperparameter”. A hyperparamater is a magic number required by a ML algorithm that you have to choose on a problem by problem basis. In this case, we need to choose how many nearby training samples are going to get to vote on the classification of our new point.<br /><br />The usual way to do this is a simple search: you try all the possibilities, and you pick the one that gives the most accurate model.
+              <a href="#37">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.038.jpeg" />
+            </td>
+            <td class="note">
+              <a name="38"></a>
+              That approach is embarrassingly parallel, so we can use pywren. First we have to set up a list of all the values of K we want to try. Then we have to write a function we can map over this list of hyperparameters that returns a trained model.
+              <a href="#38">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.039.jpeg" />
+            </td>
+            <td class="note">
+              <a name="39"></a>
+              Now we can send this computation off to AWS. Note here that pywren doesn’t only send back simple results like numbers. It can send back a rich python object with attributes and methods, in this case trained scikit-learn classifiers. And we can look at the accuracy of each model and choose the best. I’ve taken the liberty of uploading a pickle of that best model to a public URL, which allows me to do my final trick!
+              <a href="#39">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.040.jpeg" />
+            </td>
+            <td class="note">
+              <a name="40"></a>
+              This is a flask application that downloads a scikit-learn model from a public URL when it’s launched. It has a predict endpoint that expects two URL parameters and returns a prediction. I deployed it to Lambda using zappa before this talk.<br /><br />https://cpj4teujk3.execute-api.us-east-1.amazonaws.com/dev/predict?feature_1=9&feature_2=6
+              <a href="#40">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.041.jpeg" />
+            </td>
+            <td class="note">
+              <a name="41"></a>
+              So, that was kind of a grab bag. Let me give you some high level take-aways.<br /><br />We’ve seen serverless is good for deploying websites and running cron jobs. And we saw at length that it’s good for a certain kind of computation, namely embarrassingly parallel stuff. It’s good for these things in the sense that it’s relatively easy to set up and cheap to use.<br /><br />The principle to take away from this is what these things have in common — they’re bursty. That’s the reason they’re cheap on Lambda. They’re bursty in the sense that they sometimes require significant resources that Lambda can scale up to accommodation. But also in the sense that they sometimes require zero or almost zero resources. Your web product is new, your cron job isn’t on, or you’re working interactively, and you’re now staring at your notebook trying to figure out what these results mean. And on serverless you’re not paying for that thinking time.<br /><br />The great thing about serverless is not so much that it’s great when you’re using it (although the ability to scale up very large is powerful), but that it’s great when you’re not using it!
+              <a href="#41">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.042.jpeg" />
+            </td>
+            <td class="note">
+              <a name="42"></a>
+              Now, I’m not an operations person, so I’m not going to speak to its disadvantages for web applications. But I want to flag up some limitations for data science use.<br /><br />First, pywren really only works for embarrassingly parallel stuff, i.e. when the workers don’t need to communicate with each other. Some map-reduce tasks look like this, but many have a shuffle step, where the results are aggregated and manipulated and potentially distributed back out for further work. The pywren team have demonstrated workarounds that make pywren a possible alternative to hadoop and spark that involve writing intermediate results to s3. But at that point pywren is no longer the drop-in replacement for the python map function. You need to think deeply about the structure of your algorithm in order to use it.<br /><br />By the same token, many linear algebra operations can be parallelized for huge speedups, but the tricks involved mean that the resulting algorithms are often not embarrassingly parallel. That means that, out of the box, vanilla pywren can’t help. With that in mind, keep an eye on the pywren project. They’re working on a project that gives you arrays and array operations that feel like numpy, but that use Lambda as the computational backend.<br /><br />We saw with the web scraping example that you sometimes need to accumulate many tasks to make the overhead worth it. But if your atomic tasks are already over that 300 second limit, Lambda can’t help.<br /><br />And finally, Lambda instances don’t have GPUs, so aside from the subtleties of distributing gradient descent in general you probably don’t want to distribute backprop over Lambda instances.
+              <a href="#42">#</a>
+            </td>
+          </tr>
+        
+          <tr>
+            <td class="slide">
+              <img src="slides/slides.043.jpeg" />
+            </td>
+            <td class="note">
+              <a name="43"></a>
+              Remember the pywren paper was called “Distributed computing for the 99%”. <br /><br />What I understand by that is that the data science 1% operate in companies that are at a scale where they very rarely don’t require most of their computing resources. Global consumption at these companies varies, but it doesn’t go down to zero. Or if it does, their peak usage is such that’s it’s cheaper to just buy the dang cluster. And the data scientists have data engineering, tools and operations support to take care of those resources. Serverless in the sense I’ve presented it today, and in the sense I think the pywren folks have in mind, is perhaps not for those people.<br /><br />But, I guess the high level take away from this talk, is that if you’re operating independently, and you don’t have the money, the engineering support, or the patience for heavyweight solutions, take a look at zappa, pywren and the serverless ecosystem. Even if you do have those resources, check it out. It’s a lot of fun!
+              <a href="#43">#</a>
+            </td>
+          </tr>
+        
+      </table>
+    </div>
+
+    <footer>
+      <div class="share">
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet"
+     
+     data-size="large">
+    Tweet
+  </a>
+  
+</div>
+
+      <p>
+        Generated with
+        <a href="https://github.com/mcfunley/better-keynote-export">
+          better-keynote-export</a>.
+      </p>
+    </footer>
+
+    <script>
+     window.twttr = (function(d, s, id) {
+       var js, fjs = d.getElementsByTagName(s)[0],
+           t = window.twttr || {};
+       if (d.getElementById(id)) return t;
+       js = d.createElement(s);
+       js.id = id;
+       js.src = "https://platform.twitter.com/widgets.js";
+       fjs.parentNode.insertBefore(js, fjs);
+
+       t._e = [];
+       t.ready = function(f) {
+         t._e.push(f);
+       };
+
+       return t;
+     }(document, "script", "twitter-wjs"));
+    </script>
+  </body>
+</html>
