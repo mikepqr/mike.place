@@ -4,7 +4,7 @@ clean:
 build: clean
 	hugo
 
-server:
+server: clean
 	hugo server -D
 
 deploy: build
