@@ -1,5 +1,5 @@
 theme = "mike.place"
-baseurl = "/"
+baseurl = "https://mike.place/"
 title = "mike.place"
 contentdir = "content" 
 layoutdir = "layouts" 
