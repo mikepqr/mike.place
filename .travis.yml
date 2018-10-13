@@ -3,10 +3,10 @@ dist: trusty
 language: go
 
 go:
-    - 1.9.x
+    - 1.11.x
 
 install:
-    - go get -u github.com/spf13/hugo
+    - go get -u github.com/gohugoio/hugo
     - pip install --user urllib3[secure]
     - pip install --user awscli
     - aws configure set preview.cloudfront true
