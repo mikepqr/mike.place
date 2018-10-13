@@ -6,6 +6,13 @@ title = "Probabilistic programming from scratch"
 thumbnail = "post/ppscratch/compareposteriors.png"
 +++
 
+<p class="alert">Update 2018-09-09: If you're interested in the topic of this post, you might
+enjoy the <a href="https://www.infoq.com/presentations/pymc3">talk I gave at
+QCon NY in June 2018</a>. That talk combines the pedagogical code in the
+O'Reilly Orioles discussed below, with aspects of the more production/enterprise-oriented
+work on probabilistic programming <a
+href="https://blog.fastforwardlabs.com/2017/01/18/new-research-on-probabilistic-programming.html">we did at Fast Forward Labs</a>.</p>
+
 O'Reilly just published a series of Orioles (interactive video tutorials) by me
 about probabilistic programming in Python. You can read [the
 highlights](https://www.oreilly.com/learning/probabilistic-programming-from-scratch)

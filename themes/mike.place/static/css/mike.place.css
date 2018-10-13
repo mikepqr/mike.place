@@ -122,7 +122,6 @@ img {
   border-radius: 5px;
   max-width: 100%;
 }
-
 .container {
   max-width: 42rem;
   padding-left:  1rem;
@@ -166,4 +165,9 @@ img {
     text-align: center;
     color: #9a9a9a;
     margin-bottom: 2em;
+}
+.alert {
+    padding: 1rem;
+    background-color: #ffffe4;
+    border: 1px solid #515151;
 }

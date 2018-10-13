@@ -7,6 +7,13 @@ slug = "interpretability"
 
 +++
 
+<p class="alert">Update 2018-09-09: if you're interested in the topic of this
+post, you might enjoy the <a
+href="https://www.infoq.com/presentations/ml-interpretability-lime">talk I gave
+at QCon.ai in April 2018</a>, which is a much deeper look based on <a
+href="https://blog.fastforwardlabs.com/2017/08/02/interpretability.html">work
+we did at Fast Forward Labs</a>.</p>
+
 Machine learning often involves [a trade-off between accuracy and
 interpretability](https://www.oreilly.com/ideas/predictive-modeling-striking-a-balance-between-accuracy-and-interpretability).
 Models that are easy to understand perform poorly, while models that perform
@@ -26,9 +33,8 @@ Rich Caruana and colleagues from Microsoft Research has a story that
 illustrates this clearly and is worth quoting in full:
 
 > The system learned the rule `HasAsthama(x) ⇒ LowerRisk(x)`, i.e., that
-> patients
-> with pneumonia who have a history of asthma have lower risk of dying from
-> pneumonia than the general population. Needless to say, this rule is
+> patients with pneumonia who have a history of asthma have lower risk of dying
+> from pneumonia than the general population. Needless to say, this rule is
 > counterintuitive. But it reflected a true pattern in the training data:
 > patients with a history of asthma who presented with pneumonia usually were
 > admitted not only to the hospital but directly to the ICU (Intensive Care
