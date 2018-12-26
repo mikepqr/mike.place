@@ -89,6 +89,11 @@ header h1 {
   margin-bottom: 40px;
 }
 
+header h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 header .share {
     margin: 20px auto 0 auto;
 }
