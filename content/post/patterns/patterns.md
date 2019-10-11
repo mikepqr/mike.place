@@ -48,7 +48,7 @@ abstract patterns are not useful to most of us (because they're low level and
 abstract!), they great things for language designers to bear in mind.
 
 Python's designers and those of many other modern languages did exactly that,
-and made these patterns part of the syntax, as explained so well in the
+and made these patterns part of the syntax, as explained so well in
 [Brandon Rhode's guide to the GOF patterns and their applicability to
 Python](http://python-patterns.guide). (Brandon's site is also a great place to
 start if you are unclear on what a design pattern even is.)
