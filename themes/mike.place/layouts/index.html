@@ -66,7 +66,7 @@
 
 <div class="posts">
 
-  {{ range .Data.Pages }}
+  {{ range .Site.RegularPages }}
     {{ if eq .Type "post"}}
       <div class="list-item">
           <div class="list-date">{{ .Date.Format "2006-01-02" }}</div>
