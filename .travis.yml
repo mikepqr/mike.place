@@ -1,12 +1,13 @@
 dist: bionic
 
-language: go
-
-go:
-    - 1.13.x
+before_install:
+    - sudo apt-get update
+    - sudo apt-get -y install wget
+    - wget https://github.com/gohugoio/hugo/releases/download/v0.64.0/hugo_0.64.0_Linux-64bit.tar.gz
+    - tar xzvf hugo_0.64.0_Linux-64bit.tar.gz
+    - sudo cp hugo /usr/local/bin/hugo
 
 install:
-    - go get -u github.com/gohugoio/hugo
     - pip install --user urllib3[secure]
     - pip install --user awscli
     - aws configure set preview.cloudfront true
