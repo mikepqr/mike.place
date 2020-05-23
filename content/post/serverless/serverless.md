@@ -6,14 +6,12 @@ description: "An introduction to serverless and its application to things data s
 ---
 
 <p class="alert">
-
 This article is an edited version of a talk I gave at PyBay 2018. As such, it's
 loooong (sorry) and you may prefer to <a
-href="https://www.youtube.com/watch?v=9PR2-ogB5qM">watch the
-video</a>. The code examples are more complete
-at the <a href="https://github.com/williamsmj/serverless-for-data-scientists">accompanying GitHub
-repository</a>.
-
+href="https://www.youtube.com/watch?v=9PR2-ogB5qM">watch the video</a>. The
+code examples are more complete at the <a
+href="https://github.com/williamsmj/serverless-for-data-scientists">accompanying
+GitHub repository</a>.
 </p>
 
 If you've heard of serverless, you probably know it as a cloud architecture
