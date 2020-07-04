@@ -1,5 +1,7 @@
 deploy: build
-	aws s3 sync --exclude '*.swp' --delete public s3://mike.place
+	hugo deploy
+	# Do this manually because you can't set hugo's
+	# cloudFrontDistributionID config variable from the environment
 	aws cloudfront create-invalidation --distribution-id=${AWS_CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
 
 clean:
