@@ -1,17 +1,17 @@
 theme = "mike.place"
 baseurl = "https://mike.place/"
 title = "mike.place"
-contentdir = "content" 
-layoutdir = "layouts" 
-publishdir = "public" 
-canonifyurls = true 
-languageCode = "en-us" 
-MetaDataFormat = "toml" 
+contentdir = "content"
+layoutdir = "layouts"
+publishdir = "public"
+canonifyurls = true
+languageCode = "en-us"
+MetaDataFormat = "toml"
 [indexes] 
-    category = "categories" 
-    tag = "tags" 
+    category = "categories"
+    tag = "tags"
 [author] 
-    name = "Mike Lee Williams" 
+    name = "Mike Lee Williams"
 [permalinks]
     post = "/:year/:slug/"
     page = "/:slug/"
