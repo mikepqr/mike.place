@@ -2,7 +2,7 @@
 title: "resume.md: a Markdown resume"
 date: 2020-07-25T21:50:13-07:00
 slug: resume.md
-thumbnail: content/post/resume.md/resume.png
+thumbnail: post/resume.md/resume.png
 description: "resume.md: write your resume in Markdown, style it with CSS, output to HTML and PDF."
 ---
 
@@ -21,7 +21,7 @@ file
 [resume.md](https://raw.githubusercontent.com/williamsmj/resume.md/main/resume.md)
 (which is very simple vanilla Markdown), then run `make`. You'll get
 a HTML file that looks like this ![Screenshot of
-resume.html](https://raw.githubusercontent.com/williamsmj/resume.md/main/resume.png)
+resume.html](/post/resume.md/resume.png)
 and a [PDF that looks very
 similar](https://raw.githubusercontent.com/williamsmj/resume.md/main/resume.pdf).
 Edit the CSS to change fonts, spacing, layout, etc. See [the README for
