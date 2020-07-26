@@ -17,8 +17,9 @@ MetaDataFormat = "toml"
     page = "/:slug/"
 [params]
   description = "The website of Mike Lee Williams"
-[markup.goldmark.renderer]
-unsafe= true
+[markup]
+  [markup.highlight]
+    style = "monokailight"
 
 
 [deployment]

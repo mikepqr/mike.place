@@ -20,19 +20,27 @@ Python implementation of extranapkins's sequence.[^1]
 
 The 0th item in this sequence is
 
-    "Fuck off"
+```plaintext
+"Fuck off"
+```
 
 The 1st item is
 
-    "I've got two words for you: Fuck off"
+```plaintext
+"I've got two words for you: Fuck off"
+```
 
 The 2nd item is
 
-    "I've got eight words for you: I've got two words for you: Fuck off"
+```plaintext
+"I've got eight words for you: I've got two words for you: Fuck off"
+```
 
 The `n+1`th item in this sequence is
 
-    "I've got L_n words for you: S_n"
+```plaintext
+"I've got L_n words for you: S_n"
+```
 
 where `S_n` is the `n`th item in the sequence, and `L_n` is the number of words
 in `S_n`, expressed in words. Thus, here is a Python function that takes the
@@ -70,7 +78,7 @@ function `f` and an initial value `x`, and returns an iterator that lazily
 yields the items in the infinite sequence `x`, `f(x)`, `f(f(x))`, `f(f(f(x)))`,
 ...
 
-```
+```python
 from itertools import accumulate, repeat
 
 def iterate(f, x):

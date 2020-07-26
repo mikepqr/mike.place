@@ -49,7 +49,7 @@ def fib(n):
 The problem with that naive recursive approach is that the number of calls
 grows exponentially with n, making it very expensive for large `n`:
 
-```python
+```markdown
 In [1]: [_ = fib(i) for i in range(1, 35)]
 CPU times: user 30.6 s, sys: 395 ms, total: 31 s
 Wall time: 31.9 s
@@ -106,7 +106,7 @@ definition, because that expression doesn't get evaluated again.
 With memoization we get a speedup of six orders of magnitude, from seconds to
 microseconds. Which is nice.
 
-```python
+```markdown
 In [2]: %time [_ = fib_default_memoized(i) for i in range(1, 35)]
 CPU times: user 33 µs, sys: 0 ns, total: 33 µs
 Wall time: 37.9 µs
@@ -145,7 +145,7 @@ the constructor, and the result depended on the server, it would be a bad
 thing. You would then move it into a object attribute by moving it into
 `__init__`. Regardless, you get the memoization speedup:
 
-```python
+```markdown
 In [3]: f = Fib()
 
 In [4]: %time [_ = f(i) for i in range(1, 35)]
@@ -276,7 +276,7 @@ Note this is simply the original function with an extra `import` and a
 decorator. What could be simpler? And applying this decorator gives the six
 orders of magnitude speedup we expect:
 
-```
+```markdown
 In [5]: %time [fib.fib_lru_cache(i) for i in range(1, 35)]
 CPU times: user 57 µs, sys: 1 µs, total: 58 µs
 Wall time: 61 µs

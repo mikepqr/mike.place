@@ -11,7 +11,7 @@ If you have to connect via a gateway relay to a server when you're outside your
 home network, you probably have a `~/.ssh/config` that looks something like
 this:
 
-```
+```plaintext
 Host server-remote
 	Hostname server.example.com
 	ProxyJump gateway.example.com
@@ -38,7 +38,7 @@ This is where the `Match` directive comes in. This allows you to conditionally
 configure ssh by specifying a command whose output determines whether the rest
 of the configuration block is used. Here's what it looks like.
 
-```
+```plaintext
 Match host server !exec "command_that_tests_connection"
 	ProxyJump gateway.example.com
 
@@ -81,7 +81,7 @@ FAIL
 
 `~/.ssh/config` then looks like this:
 
-```
+```plaintext
 Match host server !exec "local-accessible server.example.com &>/dev/null"
     ProxyJump gateway.example.com
 
@@ -98,7 +98,7 @@ elsewhere.
 If you run into problems, first check that your version of `local-accessible`
 behaves as expected by running it manually and testing the exit code, e.g.
 
-```
+```bash
 $ local-accessible server.example.com &>/dev/null && echo "OK" || echo "FAIL"
 ```
 

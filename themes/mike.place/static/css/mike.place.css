@@ -90,6 +90,11 @@ pre {
   white-space: pre;
   word-break: break-all;
   overflow-x: auto;
+  padding: 1em;
+  /* for consistenct with monokailight syntax theme */
+  /* overridden if a codeblock specifies a language */
+  color:#272822;
+  background-color:#fafafa;
 }
 pre .wrap {
   white-space: pre-wrap;

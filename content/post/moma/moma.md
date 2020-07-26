@@ -47,7 +47,7 @@ moma = pd.read_csv('Artworks.csv', index_col=12, parse_dates=[10])
 To sanity check the data, you can look at, e.g. `moma.iloc[0]` (the 0th
 record).
 
-```markdown
+```plaintext
 Title             Ferdinandsbrücke Project, Vienna, Austria , El...
 Artist                                                   Otto Wagner
 ArtistBio                                      (Austrian, 1841–1918)
@@ -81,7 +81,7 @@ for c in categorical_columns:
 
 You can then inspect the categories:
 
-```markdown
+```plaintext
 Classification 
  Index(['(not assigned)', 'A&D Architectural Drawing',
        'A&D Architectural Model', 'A&D Design', 'A&D Graphic Design',

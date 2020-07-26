@@ -106,7 +106,7 @@ recommend highly enough, incidentally).
 Back to the election. First I scraped the results from
 [Wikipedia](https://en.wikipedia.org/wiki/United_States_presidential_election,_2016).
 
-```python
+```plaintext
 >>> print(results2016)
 {'AK': {'dem': 116454, 'evs': 3, 'gop': 163387},
  'AL': {'dem': 729547, 'evs': 9, 'gop': 1318255},
@@ -150,7 +150,7 @@ def evsreqd(results, total=538):
 
 Here they are in action:
 
-```python
+```plaintext
 >>> evsreqd(results2016)
 38
 ```
@@ -184,7 +184,7 @@ def printresults(flips, loser='Democrats'):
 
 Finally, `printresults()` prints the solution:
 
-```python
+```plaintext
 >>> flips2016 = findflips(results2016)
 >>> printflips(flips2016)
 Move 22749 Democrats to WI for 10 EVs
@@ -214,7 +214,7 @@ eye.
 And the same goes for 2000: that election famously hung on an incredibly tight
 outcome in Florida. Let's just sanity check the code above:
 
-```python
+```plaintext
 >>> flips2000 = findflips(results2000)
 >>> printflips(flips2000)
 Move 538 Democrats to FL for 25 EVs
@@ -226,7 +226,7 @@ out efficiently and correctly too.
 
 ### 2004
 
-```python
+```plaintext
 >>> flips2004 = findflips(results2004)
 >>> printflips(flips2004)
 Move 5989 Democrats to NM for 5 EVs
@@ -239,7 +239,7 @@ Pretty close! But not as close as 2016.
 
 ### 2008
 
-```python
+```plaintext
 >>> flips2008 = findflips(results2008)
 >>> printflips(flips2008, loser='Republicans')
 Move 28392 Republicans to IN for 11 EVs
@@ -257,7 +257,7 @@ EVs they add up to exactly the 270 required for victory.
 
 ### 2012
 
-```python
+```plaintext
 >>> flips2012 = findflips(results2012)
 >>> printflips(flips2012, loser='Republicans')
 Move 67807 Republicans to NV for 6 EVs

@@ -187,7 +187,7 @@ $ cat zappa_settings.json
 
 Then you do `zappa deploy`, and this is where Zappa shines:
 
-```markdown
+```plaintext
 $ zappa deploy
 Calling deploy for stage dev..
 Downloading and installing dependencies..
@@ -368,7 +368,7 @@ Pywren provides an (almost) drop-in replacement for Python's built-in `map`
 function that uses a separate AWS Lambda instance for each application of the
 function to an argument, instead of your local machine. Here's the syntax:
 
-```
+```python
 >>> import pywren
 
 >>> pwex = pywren.default_executor()
