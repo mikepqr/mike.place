@@ -15,4 +15,4 @@ clean:
 	rm -rf public
 
 server: clean
-	hugo server -D
+	hugo server --buildDrafts

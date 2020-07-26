@@ -7,8 +7,8 @@ description: "resume.md: write your resume in Markdown, style it with CSS, outpu
 ---
 
 I just put [resume.md on GitHub](https://github.com/williamsmj/resume.md). It's
-a Makefile and some CSS that builds a HTML and PDF version of my resume from
-plain Markdown source. 
+a Makefile and some CSS that builds a HTML and PDF version of a resume from
+plain Markdown source.
 
 Plain text source has all the usual benefits (plays nice with version control,
 diff, grep, etc.), but this approach has the additional advantage that it has
