@@ -11,7 +11,7 @@ build: $(shell git ls-files)
 	touch $@
 
 clean:
-	rm build
+	rm -f build
 	rm -rf public
 
 server: clean

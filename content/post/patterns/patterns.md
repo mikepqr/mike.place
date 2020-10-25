@@ -2,6 +2,7 @@
 title: "What is the deal with software patterns?"
 date: 2018-10-12T20:33:13-07:00
 slug: patterns
+thumbnail: post/patterns/balcony.gif
 description: "A Pattern Language, the Gang of Four, and Python"
 ---
 
