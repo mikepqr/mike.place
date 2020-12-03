@@ -17,7 +17,7 @@ problem](https://en.wikipedia.org/wiki/Knapsack_problem), an
 By solving it, we can show that Democrats win 21st century elections by
 relative landslides, while Republicans win by very narrow margins. And the
 2016 election was the closest since 2000. Code and data is available in
-[`ecknapsack` on GitHub](https://github.com/williamsmj/ecknapsack).
+[`ecknapsack` on GitHub](https://github.com/mikepqr/ecknapsack).
 
 ## The Electoral College
 
@@ -92,7 +92,7 @@ def complementaryknapsack(items, W):
 ```
 
 The final piece of the puzzle is the vanilla knapsack solver itself,
-[`knapsack()`](https://github.com/williamsmj/ecknapsack/blob/master/ecknapsack.py#L71-L109).
+[`knapsack()`](https://github.com/mikepqr/ecknapsack/blob/master/ecknapsack.py#L71-L109).
 I won't reproduce it here, but it's a standard dynamic programming solution.
 Like `complementaryknapsack()` it takes an iterable `items`, each element of
 which is a `(label, value, weight)` triple, and a capacity, and returns the

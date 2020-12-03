@@ -122,7 +122,7 @@ A fresh install of macOS will add the name of the active virtual environment to
 your bash prompt. This is not necessary, but is nice to have. If you want it
 and your system doesn't, or you have specific requirements, then there are lots
 of options including, e.g. [my
-dotfiles](https://github.com/williamsmj/dotfiles/blob/874fbf15a459d1464ae60876014b0d14f413b8b1/bash/.bashrc#L72-L150),
+dotfiles](https://github.com/mikepqr/dotfiles/blob/874fbf15a459d1464ae60876014b0d14f413b8b1/bash/.bashrc#L72-L150),
 which I pinched from
 [StackOverflow](http://stackoverflow.com/a/23410110/409879).
 

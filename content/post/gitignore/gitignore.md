@@ -19,7 +19,7 @@ By default, the global gitignore path is `~/.config/git/ignore` on Unix/macOS
 and `%USERPROFILE%\git\ignore` on Windows.
 
 The syntax is just like that for `.gitignore` files. Here's what [mine looks
-like](https://github.com/williamsmj/dotfiles/blob/master/git/.config/git/ignore).
+like](https://github.com/mikepqr/dotfiles/blob/master/git/.config/git/ignore).
 
 ## Don't misuse the repository `.gitignore`
 

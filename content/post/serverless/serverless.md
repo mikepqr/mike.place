@@ -10,7 +10,7 @@ This article is an edited version of a talk I gave at PyBay 2018. As such, it's
 loooong (sorry) and you may prefer to <a
 href="https://www.youtube.com/watch?v=9PR2-ogB5qM">watch the video</a>. The
 code examples are more complete at the <a
-href="https://github.com/williamsmj/serverless-for-data-scientists">accompanying
+href="https://github.com/mikepqr/serverless-for-data-scientists">accompanying
 GitHub repository</a>.
 </p>
 
@@ -238,7 +238,7 @@ production, publicly accessible, and you're paying exactly zero dollars for it
 while it's not in use.
 
 I've put all the code for this article in [a GitHub
-repository](https://github.com/williamsmj/serverless-for-data-scientists). In
+repository](https://github.com/mikepqr/serverless-for-data-scientists). In
 there I also show how to upgrade this deployed application to allow the
 time zone as a URL parameter. Zappa makes that upgrade easy (run `zappa
 update`), and offers a handy `zappa tail` command that consolidates the logs and errors
@@ -247,7 +247,7 @@ makes debugging easier if you screw up the deployment or the running application
 generates an exception (say, if a user supplies an invalid URL parameter). You
 can even use serverless in general (and Zappa with AWS Lambda in particular) to
 configure cron jobs to run on serverless executors. For an example of that, see
-my [weather Twitter bot](https://github.com/williamsmj/dwx).
+my [weather Twitter bot](https://github.com/mikepqr/dwx).
 
 ## The advantages and limitations of serverless
 
@@ -508,7 +508,7 @@ Lambda instances dominates. By accumulating lots of pages until that 20-second
 overhead is worth it, I maximize my speedup.
 
 The above is pseudocode. The full code (and the resulting dataset) is [on
-GitHub](github.com/williamsmj/nips.json) if you're interested.
+GitHub](github.com/mikepqr/nips.json) if you're interested.
 
 ### 2. The Black-Scholes equation
 
