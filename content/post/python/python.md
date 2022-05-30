@@ -15,7 +15,7 @@ can be easily undone. Just delete the virtual environment that ails you (or
 
 Note: this post is about how to set up multiple Python _environments_ on a
 development machine. It doesn't cover how to have multiple Python
-_interpreters_ on a single machine. I have [another post]() about that.
+_interpreters_ on a single machine. I have [another post]({{< ref "python-pyenv" >}}) about that.
 
 ## macOS-only prerequsite
 
