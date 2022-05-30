@@ -7,7 +7,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 }
 
 html {
@@ -36,7 +36,7 @@ a:hover, a:focus {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Poly, serif;
+  font-family: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   margin-bottom: .5rem;
   font-weight: bold;
   line-height: 1.25;
@@ -76,7 +76,7 @@ hr {
   border-bottom: 1px solid #fff;
 }
 code, pre {
-  font-family: "Roboto Mono", Menlo, Monaco, "Courier New", monospace;
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
 }
 code {
   font-size: 90%;
@@ -146,6 +146,7 @@ img {
 .list-date {
   color: #777;
   flex-shrink: 0;
+  width: 6em;
   margin-right: 0.8rem;
 }
 
