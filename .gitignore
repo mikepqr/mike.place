@@ -1,3 +1,4 @@
 public/
 dev/
 build
+.hugo_build.lock
