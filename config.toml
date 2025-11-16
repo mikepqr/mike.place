@@ -21,15 +21,3 @@ MetaDataFormat = "toml"
 style = "monokailight"
 [markup.goldmark.renderer]
 unsafe= true
-
-
-[deployment]
-
-[[deployment.targets]]
-# An arbitrary name for this target.
-name = "s3"
-URL = "s3://mike.place?region=us-east-1"
-
-[[deployment.matchers]]
-pattern = "^.+\\.(js|css|svg|ttf|html|xml|json)$"
-gzip = true
