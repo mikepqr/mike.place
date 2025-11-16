@@ -10,13 +10,13 @@ MetaDataFormat = "toml"
 [indexes] 
     category = "categories"
     tag = "tags"
-[author] 
-    name = "Mike Lee Williams"
 [permalinks]
     post = "/:year/:slug/"
     page = "/:slug/"
 [params]
   description = "The website of Mike Lee Williams"
+  [params.author]
+    name = "Mike Lee Williams"
 [markup.highlight]
 style = "monokailight"
 [markup.goldmark.renderer]
